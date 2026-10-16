@@ -2,7 +2,7 @@
 
 作成日: 2026-10-16
 
-状態: 計画作成済み。以下の12件はすべて open。計画作成時点で移植先にはルートの README.md のみがあり、MoonBit実装、ビルド設定、CI、デモはない。本文中の配置・API・コマンド・性能予算は今後実装する設計であり、動作確認済みの機能ではない。
+状態: 計画作成済み。以下の12件はすべて polished（`issues/polished/`）。計画作成時点で移植先にはルートの README.md のみがあり、MoonBit実装、ビルド設定、CI、デモはない。本文中の配置・API・コマンド・性能予算は今後実装する設計であり、動作確認済みの機能ではない。Issue本体は実装可能な形式へ整備済みだが、実装・検証は未着手。
 
 ## 1. 目的と設計判断
 
@@ -34,15 +34,15 @@
 
 | ID | 実装単位 | 優先度 | 土台となるIssue |
 | --- | --- | --- | --- |
-| [RADEN-0001](0001-bootstrap-and-port-contract.md) | ツールチェーン、API棚卸し、ライセンス、target分離 | P1 | なし |
-| [RADEN-0002](0002-rust-oracle-and-conformance.md) | 固定Rust oracle、fixture、差分・偽陽性防止 | P1 | 0001 |
-| [RADEN-0003](0003-image-pixel-compositing-context.md) | Image、ピクセル合成、Context、矩形描画 | P1 | 0001 |
-| [RADEN-0004](0004-geometry-paths-affine.md) | 幾何、Path、行列、平坦化 | P1 | 0001 |
-| [RADEN-0005](0005-analytic-rasterizer.md) | 解析的ラスタライズ、coverage、形状塗り | P1 | 0003、0004 |
-| [RADEN-0006](0006-strokes-and-dashes.md) | stroke-to-fill、cap/join、dash | P2 | 0005 |
-| [RADEN-0007](0007-gradients-patterns-blit.md) | Gradient、Pattern、Blit、合成モード拡充 | P2 | 0005 |
-| [RADEN-0008](0008-upstream-examples-headless.md) | 上流example全8本の追跡、共通scene、ヘッドレスCLI | P1 | 0002、0003 |
-| [RADEN-0009](0009-browser-vector-playground.md) | Web表示、操作、参照画像との比較、公開準備 | P1 | 0002、0008 |
+| [RADEN-0001](polished/0001-bootstrap-and-port-contract.md) | ツールチェーン、API棚卸し、ライセンス、target分離 | P1 | なし |
+| [RADEN-0002](polished/0002-rust-oracle-and-conformance.md) | 固定Rust oracle、fixture、差分・偽陽性防止 | P1 | 0001 |
+| [RADEN-0003](polished/0003-image-pixel-compositing-context.md) | Image、ピクセル合成、Context、矩形描画 | P1 | 0001 |
+| [RADEN-0004](polished/0004-geometry-paths-affine.md) | 幾何、Path、行列、平坦化 | P1 | 0001 |
+| [RADEN-0005](polished/0005-analytic-rasterizer.md) | 解析的ラスタライズ、coverage、形状塗り | P1 | 0003、0004 |
+| [RADEN-0006](polished/0006-strokes-and-dashes.md) | stroke-to-fill、cap/join、dash | P2 | 0005 |
+| [RADEN-0007](polished/0007-gradients-patterns-blit.md) | Gradient、Pattern、Blit、合成モード拡充 | P2 | 0005 |
+| [RADEN-0008](polished/0008-upstream-examples-headless.md) | 上流example全8本の追跡、共通scene、ヘッドレスCLI | P1 | 0002、0003 |
+| [RADEN-0009](polished/0009-browser-vector-playground.md) | Web表示、操作、参照画像との比較、公開準備 | P1 | 0002、0008 |
 | [RADEN-0010](0010-gpui-native-host.md) | gpui.mbt画像表示、イベント・寿命管理 | P2 | 0008 |
 | [RADEN-0011](0011-fonts-and-shaping.md) | TrueTypeアウトライン、GSUB/GPOS、font_shaping | P2 | 0005、0006 |
 | [RADEN-0012](0012-quality-performance-release.md) | 回帰ゲート、turtles/hotpath、性能、配布 | P2 | 0002、0008 |
