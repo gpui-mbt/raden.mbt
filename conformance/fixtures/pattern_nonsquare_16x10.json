@@ -1,0 +1,1 @@
+{"schema":"raden.fixture.v1","fixture_id":"pattern_nonsquare_16x10","width":16,"height":10,"pixel_format":"prgb32","commands":[{"op":"set_fill_pattern","image":{"width":3,"height":2,"rgba8":[255,0,0,255,0,255,0,255,0,0,255,255,255,255,0,255,0,255,255,255,255,0,255,255]},"extend":"Reflect","filter":"Nearest"},{"op":"fill_rect","x":0.0,"y":0.0,"w":16.0,"h":10.0}]}

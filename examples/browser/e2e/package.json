@@ -1,0 +1,9 @@
+{
+  "name": "raden-browser-e2e",
+  "private": true,
+  "type": "module",
+  "description": "Vector Playground E2E checks (chromium)",
+  "devDependencies": {
+    "playwright": "^1.64.0"
+  }
+}

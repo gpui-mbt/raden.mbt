@@ -1,0 +1,19 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "fill_path_cubic_12x10",
+  "width": 12,
+  "height": 10,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_fill_style", "r": 0, "g": 128, "b": 255, "a": 255 },
+    {
+      "op": "fill_path",
+      "commands": [
+        { "cmd": "move_to", "x": 1.0, "y": 8.0 },
+        { "cmd": "cubic_to", "c1x": 3.0, "c1y": 0.0, "c2x": 9.0, "c2y": 0.0, "x": 11.0, "y": 8.0 },
+        { "cmd": "close" }
+      ]
+    }
+  ]
+}

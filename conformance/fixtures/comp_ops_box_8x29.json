@@ -1,0 +1,349 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "comp_ops_box_8x29",
+  "width": 8,
+  "height": 29,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "set_comp_op",
+      "value": "SrcCopy"
+    },
+    {
+      "op": "set_fill_style",
+      "r": 60,
+      "g": 120,
+      "b": 180,
+      "a": 200
+    },
+    {
+      "op": "fill_all"
+    },
+    {
+      "op": "set_fill_style",
+      "r": 200,
+      "g": 100,
+      "b": 50,
+      "a": 128
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SrcOver"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 0.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SrcCopy"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 1.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SrcIn"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 2.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SrcOut"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 3.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SrcAtop"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 4.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "DstOver"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 5.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "DstCopy"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 6.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "DstIn"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 7.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "DstOut"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 8.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "DstAtop"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 9.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Xor"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 10.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Clear"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 11.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Plus"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 12.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Minus"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 13.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Modulate"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 14.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Multiply"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 15.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Screen"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 16.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Overlay"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 17.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Darken"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 18.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Lighten"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 19.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "ColorDodge"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 20.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "ColorBurn"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 21.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "LinearBurn"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 22.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "LinearLight"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 23.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "PinLight"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 24.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "HardLight"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 25.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SoftLight"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 26.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Difference"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 27.0,
+      "w": 8.0,
+      "h": 1.0
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Exclusion"
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 28.0,
+      "w": 8.0,
+      "h": 1.0
+    }
+  ]
+}

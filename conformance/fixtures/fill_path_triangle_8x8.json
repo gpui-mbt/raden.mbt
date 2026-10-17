@@ -1,0 +1,20 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "fill_path_triangle_8x8",
+  "width": 8,
+  "height": 8,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_fill_style", "r": 255, "g": 0, "b": 0, "a": 255 },
+    {
+      "op": "fill_path",
+      "commands": [
+        { "cmd": "move_to", "x": 1.0, "y": 1.0 },
+        { "cmd": "line_to", "x": 7.0, "y": 1.0 },
+        { "cmd": "line_to", "x": 4.0, "y": 7.0 },
+        { "cmd": "close" }
+      ]
+    }
+  ]
+}

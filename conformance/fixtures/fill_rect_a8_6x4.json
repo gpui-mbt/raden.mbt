@@ -1,0 +1,14 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "fill_rect_a8_6x4",
+  "width": 6,
+  "height": 4,
+  "pixel_format": "a8",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_fill_style", "r": 0, "g": 0, "b": 0, "a": 200 },
+    { "op": "fill_all" },
+    { "op": "set_fill_style", "r": 0, "g": 0, "b": 0, "a": 100 },
+    { "op": "fill_rect", "x": 2.0, "y": 1.0, "w": 3.0, "h": 2.0 }
+  ]
+}

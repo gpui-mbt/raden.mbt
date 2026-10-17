@@ -1,0 +1,17 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "stroke_line_round_square_16x10",
+  "width": 16,
+  "height": 10,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_stroke_style", "r": 0, "g": 128, "b": 255, "a": 255 },
+    { "op": "set_stroke_width", "value": 3.0 },
+    { "op": "set_stroke_cap", "value": "Round" },
+    { "op": "stroke_line", "x0": 3.0, "y0": 3.0, "x1": 13.0, "y1": 3.0 },
+    { "op": "set_stroke_cap", "value": "Square" },
+    { "op": "set_stroke_style", "r": 255, "g": 0, "b": 0, "a": 255 },
+    { "op": "stroke_line", "x0": 3.0, "y0": 7.0, "x1": 13.0, "y1": 7.0 }
+  ]
+}

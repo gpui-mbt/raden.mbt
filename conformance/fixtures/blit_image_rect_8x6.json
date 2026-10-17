@@ -1,0 +1,26 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "blit_image_rect_8x6",
+  "width": 8,
+  "height": 6,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    {
+      "op": "blit_image_rect",
+      "x": 1.0,
+      "y": 1.0,
+      "w": 6.0,
+      "h": 4.0,
+      "image": {
+        "width": 2,
+        "height": 2,
+        "rgba8": [
+          255, 0, 0, 255, 0, 255, 0, 255,
+          0, 0, 255, 255, 255, 255, 255, 255
+        ]
+      },
+      "src": null
+    }
+  ]
+}

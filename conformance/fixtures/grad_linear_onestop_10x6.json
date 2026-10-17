@@ -1,0 +1,1 @@
+{"schema":"raden.fixture.v1","fixture_id":"grad_linear_onestop_10x6","width":10,"height":6,"pixel_format":"prgb32","commands":[{"op":"set_fill_gradient_linear","x0":0.0,"y0":0.0,"x1":10.0,"y1":0.0,"extend":"Pad","stops":[{"offset":0.4,"r":40,"g":80,"b":160,"a":200}]},{"op":"fill_rect","x":0.0,"y":0.0,"w":10.0,"h":6.0}]}

@@ -1,0 +1,19 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "gpui-mbt/raden/internal/raster"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct AnalyticRasterizer {
+  mut cells : Array[Int]
+  mut cov_buf : Array[Byte]
+  sorted_buf : Array[(Double, Double, Double, Double)]
+}
+pub fn AnalyticRasterizer::new() -> Self
+pub fn AnalyticRasterizer::rasterize(Self, Array[(Double, Double, Double, Double)], Int, Int, Int, Int, even_odd? : Bool, (Int, Int, ArrayView[Byte]) -> Unit) -> Unit
+
+// Type aliases
+
+// Traits

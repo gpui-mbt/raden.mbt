@@ -63,7 +63,7 @@ raden.mbtのCPU描画結果をgpui.mbtのウィンドウへ表示し、同じsce
 - [ ] Given pointer操作, when 対象windowとscene座標を確認する, then 背面/閉鎖/他windowへの入力を防止するテストが通る。
 - [ ] LinuxとmacOSが別々にPASS/FAIL/未実行として報告される。windowが開いたことだけで全操作・表示比較成功としない。
 - [ ] Given core-only consumer, when 依存を検査する, then gpui/Nodeが入らず、GUI依存を除いた環境で従来のheadlessテストが動く。
-- [ ] gpui.mbtの必要APIの可用性確認結果が記録され、不足時の切り出し先が明記されている。
+- [x] gpui.mbtの必要APIの可用性確認結果が記録され、不足時の切り出し先が明記されている。
 
 ## テスト計画
 
@@ -92,6 +92,24 @@ raden.mbtのCPU描画結果をgpui.mbtのウィンドウへ表示し、同じsce
 
 ## 注記
 
-- 検証状態: 未実行（実装計画）。gpui側の必要APIの可用性も着手時確認事項。
+- 検証状態: **blocked (gpui 側 API 不足)**。2026-10-17 に f4ah6o/gpui@0.7.2
+  (mooncakes 最新公開版) の全 `pkg.generated.mbti` を走査して確認した。
+- API 可用性調査結果:
+
+  | 必要機能 | 有無 | 根拠 |
+  | --- | --- | --- |
+  | window 開閉 | 有 | `ubuntu::Host::create_window/destroy_window/request_close` |
+  | pointer/keyboard event | 有 | `Host::dispatch/next_event` → `@platform.Event` |
+  | resize/DPR | 有 | `set_size` / `window_metrics` / `frame_metrics` |
+  | 再描画要求 | 一部 | `present(WindowId, SceneSnapshot)` Scene 経路のみ |
+  | raw pixel/画像 upload | **無** | `SceneItem`=Quad/Text/TextRun、`PaintKind`=Quad/ClipPush/ClipPop のみ |
+  | 画像 element | **無** | element/scene の公開面に画像項目なし |
+
+  `Host::copy_frame` は `@testing.FrameReadback` の読み戻し専用で upload ではない。
+- 切り出し先: `issues/open/20261017-gpui-image-display-item.md` に
+  要求契約 (premultiplied RGBA8 + stride + copy 契約 + FrameReadback 検証) を
+  記録。gpui-mbt/gpui.mbt 側での提供を待つ。
+- moon.mod へ一時追加した f4ah6o/gpui 依存は除去済み (adapter を書けないため
+  core 消費者に不要な依存を残さない)。
 - 本Issueは [issues/README.md](../README.md) のM4（Native統合・テキスト）に含まれ、RADEN-0011とは別々に判定する。
 - 2026-10-16: polish-issue で実装可能な形式へ整備。issues/open から移動。内容は計画作成時のもので、実装・検証は未実行

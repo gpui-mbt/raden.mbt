@@ -1,0 +1,1 @@
+{"schema":"raden.fixture.v1","fixture_id":"scene_stroke_drawing","width":1280,"height":720,"pixel_format":"prgb32","commands":[{"op":"scene","name":"stroke_drawing","frame":0,"fps":60}]}

@@ -1,0 +1,151 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+# 回帰ゲート: 各 job は結果を ci/jobs/<name>.json として artifact に残し、
+# 最後の gate job が scripts/check_gate.py で fail-closed に集約する。
+# required job が skip/cancel/missing でも gate は通さない。
+
+env:
+  MOON_HOME: ${{ github.workspace }}/.moon-toolchain
+
+jobs:
+  setup-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install moon toolchain
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - run: moon version --all
+
+  fmt-check:
+    needs: setup-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install moon
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: moon fmt --check
+        run: moon fmt --check
+      - name: record job result
+        if: always()
+        run: |
+          mkdir -p ci/jobs
+          status=pass; [ "${{ job.status }}" = "success" ] || status=fail
+          printf '{"name":"moon_fmt_check","required":true,"status":"%s","duration_ms":0,"command":"moon fmt --check","note":""}\n' "$status" > ci/jobs/moon_fmt_check.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: job-moon_fmt_check
+          path: ci/jobs/moon_fmt_check.json
+
+  moonbit-native:
+    needs: setup-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install moon
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: moon check --target native
+        id: check
+        run: moon check --target native
+      - name: moon test --target native
+        id: test
+        run: moon test --target native
+      - name: record job results
+        if: always()
+        run: |
+          mkdir -p ci/jobs
+          s=pass; [ "${{ steps.check.outcome }}" = "success" ] || s=fail
+          printf '{"name":"moon_check_native","required":true,"status":"%s","duration_ms":0,"command":"moon check --target native","note":""}\n' "$s" > ci/jobs/moon_check_native.json
+          s=pass; [ "${{ steps.test.outcome }}" = "success" ] || s=fail
+          printf '{"name":"moon_test_native","required":true,"status":"%s","duration_ms":0,"command":"moon test --target native","note":""}\n' "$s" > ci/jobs/moon_test_native.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: job-moonbit-native
+          path: ci/jobs/
+
+  moonbit-js:
+    needs: setup-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install moon + node
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: moon check --target js
+        id: check
+        run: moon check --target js
+      - name: moon test --target js
+        id: test
+        run: moon test --target js
+      - name: record job results
+        if: always()
+        run: |
+          mkdir -p ci/jobs
+          s=pass; [ "${{ steps.check.outcome }}" = "success" ] || s=fail
+          printf '{"name":"moon_check_js","required":true,"status":"%s","duration_ms":0,"command":"moon check --target js","note":""}\n' "$s" > ci/jobs/moon_check_js.json
+          s=pass; [ "${{ steps.test.outcome }}" = "success" ] || s=fail
+          printf '{"name":"moon_test_js","required":true,"status":"%s","duration_ms":0,"command":"moon test --target js","note":""}\n' "$s" > ci/jobs/moon_test_js.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: job-moonbit-js
+          path: ci/jobs/
+
+  conformance:
+    needs: setup-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install moon + rust
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+      - name: run conformance
+        id: conf
+        run: bash conformance/run_conformance.sh
+      - name: record job result
+        if: always()
+        run: |
+          mkdir -p ci/jobs
+          s=pass; [ "${{ steps.conf.outcome }}" = "success" ] || s=fail
+          printf '{"name":"conformance","required":true,"status":"%s","duration_ms":0,"command":"bash conformance/run_conformance.sh","note":""}\n' "$s" > ci/jobs/conformance.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: job-conformance
+          path: ci/jobs/conformance.json
+
+  gate:
+    # required job の全てが登録済みかを確認する。needs が cancelled/skipped
+    # でも always() で集約を走らせ、欠落した job json は missing として拒否する。
+    needs: [fmt-check, moonbit-native, moonbit-js, conformance]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: job-*
+          path: ci/jobs
+          merge-multiple: true
+      - name: aggregate gate (fail-closed)
+        run: |
+          python3 scripts/check_gate.py ci/jobs ci/report.json
+          cat ci/report.json

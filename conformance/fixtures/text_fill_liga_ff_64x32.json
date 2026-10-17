@@ -1,0 +1,25 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "text_fill_liga_ff_64x32",
+  "width": 64,
+  "height": 32,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "set_fill_style",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    {
+      "op": "text",
+      "draw": "fill",
+      "font": "SourceSans3-Regular.ttf",
+      "size": 32,
+      "x": 4,
+      "y": 26,
+      "text": "ff"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>raden Vector Playground</title>
+<style>
+  :root {
+    --bg: #14161f; --panel: #1c1f2b; --line: #2c3040; --fg: #d8dbe6;
+    --dim: #8b90a5; --pass: #3fbf6f; --fail: #e05555; --uncmp: #b08a2e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 16px; background: var(--bg); color: var(--fg);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px;
+  }
+  h1 { font-size: 16px; margin: 0 0 4px; }
+  .note { color: var(--dim); margin-bottom: 12px; }
+  .note b { color: var(--uncmp); }
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 6px; padding: 10px 12px; margin-bottom: 12px;
+  }
+  .controls label { color: var(--dim); display: flex; gap: 6px; align-items: center; }
+  select, input[type=number], input[type=range] {
+    background: #101320; color: var(--fg); border: 1px solid var(--line);
+    border-radius: 4px; padding: 3px 6px; font: inherit;
+  }
+  input[type=number] { width: 76px; }
+  input[type=range] { width: 110px; padding: 0; }
+  button {
+    background: #24305a; color: var(--fg); border: 1px solid var(--line);
+    border-radius: 4px; padding: 4px 12px; font: inherit; cursor: pointer;
+  }
+  button:hover { background: #2e3c70; }
+  .panes { display: flex; gap: 12px; flex-wrap: wrap; }
+  .pane { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 10px; }
+  .pane h2 { font-size: 12px; margin: 0 0 6px; color: var(--dim); font-weight: normal; }
+  .canvas-wrap {
+    position: relative; overflow: auto; max-width: 46vw; max-height: 60vh;
+    border: 1px solid var(--line); border-radius: 4px;
+  }
+  canvas { display: block; image-rendering: pixelated; }
+  .checker canvas { background:
+    repeating-conic-gradient(#2a2e3d 0% 25%, #202432 0% 50%) 0 0 / 16px 16px; }
+  .status {
+    margin-top: 12px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 6px; padding: 10px 12px;
+    display: grid; grid-template-columns: 140px 1fr; gap: 4px 10px;
+    max-width: 920px;
+  }
+  .status .k { color: var(--dim); }
+  .status .v { word-break: break-all; }
+  .verdict { font-weight: bold; font-size: 15px; }
+  .verdict.pass { color: var(--pass); }
+  .verdict.fail { color: var(--fail); }
+  .verdict.uncompared, .verdict.noref, .verdict.err { color: var(--uncmp); }
+  .hash { font-size: 11px; }
+</style>
+</head>
+<body>
+<h1>raden Vector Playground</h1>
+<p class="note">
+  左: <b>Rust oracle の固定参照画像</b> (事前生成・ライブ実行ではない) /
+  右: MoonBit live 描画。比較は canonical raw bytes で行い、
+  canvas 表示は参考用。<span id="candidate-info"></span>
+</p>
+
+<div class="controls">
+  <label>preset
+    <select id="preset"></select>
+  </label>
+  <label>size <input id="width" type="number" min="1" max="4096">
+    × <input id="height" type="number" min="1" max="4096"></label>
+  <label>frame <input id="frame" type="number" min="0" value="0"></label>
+  <button id="step-back" title="freeze: -1 frame">-1f</button>
+  <button id="step-fwd" title="freeze: +1 frame">+1f</button>
+  <label>fps <input id="fps" type="number" min="1" value="60"></label>
+  <label>zoom <input id="zoom" type="range" min="10" max="400" value="100"> <span id="zoom-v">100%</span></label>
+  <label><input id="checker" type="checkbox" checked> checker bg</label>
+  <button id="redraw">redraw</button>
+  <button id="reset">reset</button>
+  <button id="download">download png</button>
+</div>
+
+<div class="panes">
+  <div class="pane">
+    <h2>Rust oracle reference (fixed)</h2>
+    <div class="canvas-wrap checker"><canvas id="ref-canvas"></canvas></div>
+  </div>
+  <div class="pane">
+    <h2>MoonBit live</h2>
+    <div class="canvas-wrap checker"><canvas id="live-canvas"></canvas></div>
+  </div>
+</div>
+
+<div class="status">
+  <span class="k">verdict</span><span class="v verdict uncompared" id="verdict">UNCOMPARED</span>
+  <span class="k">input hash</span><span class="v hash" id="input-hash">-</span>
+  <span class="k">reference sha256</span><span class="v hash" id="ref-sha">-</span>
+  <span class="k">candidate sha256</span><span class="v hash" id="live-sha">-</span>
+  <span class="k">diff</span><span class="v" id="diff">-</span>
+  <span class="k">detail</span><span class="v" id="detail">-</span>
+  <span class="k">pointer (image px)</span><span class="v" id="pointer">-</span>
+</div>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>

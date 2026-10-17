@@ -1,0 +1,14 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "stroke_circle_16x16",
+  "width": 16,
+  "height": 16,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_stroke_style", "r": 0, "g": 0, "b": 0, "a": 255 },
+    { "op": "set_stroke_width", "value": 1.5 },
+    { "op": "set_stroke_join", "value": "MiterClip" },
+    { "op": "stroke_circle", "cx": 8.0, "cy": 8.0, "r": 5.0 }
+  ]
+}

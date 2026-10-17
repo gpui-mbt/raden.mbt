@@ -1,0 +1,5 @@
+import {
+  "gpui-mbt/raden",
+}
+
+pkgtype(kind: "executable")

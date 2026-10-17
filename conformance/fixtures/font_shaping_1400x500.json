@@ -1,0 +1,76 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "font_shaping_1400x500",
+  "width": 1400,
+  "height": 500,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "set_fill_style",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    {
+      "op": "fill_rect",
+      "x": 0.0,
+      "y": 0.0,
+      "w": 1400.0,
+      "h": 500.0
+    },
+    {
+      "op": "set_fill_style",
+      "r": 64,
+      "g": 64,
+      "b": 64,
+      "a": 255
+    },
+    {
+      "op": "text",
+      "draw": "fill",
+      "font": "SourceSans3-Regular.ttf",
+      "size": 24,
+      "x": 32,
+      "y": 48,
+      "text": "default features (liga / kern / clig ON)"
+    },
+    {
+      "op": "text",
+      "draw": "fill",
+      "font": "SourceSans3-Regular.ttf",
+      "size": 24,
+      "x": 32,
+      "y": 364,
+      "text": "features disabled"
+    },
+    {
+      "op": "set_fill_style",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    {
+      "op": "text",
+      "draw": "fill",
+      "font": "SourceSans3-Regular.ttf",
+      "size": 96,
+      "x": 32,
+      "y": 220,
+      "text": "ffi AV fl"
+    },
+    {
+      "op": "text",
+      "draw": "fill",
+      "font": "SourceSans3-Regular.ttf",
+      "size": 96,
+      "x": 32,
+      "y": 436,
+      "text": "ffi AV fl",
+      "kern": false,
+      "liga": false,
+      "clig": false
+    }
+  ]
+}

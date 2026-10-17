@@ -1,0 +1,12 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "fill_circle_10x10",
+  "width": 10,
+  "height": 10,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_fill_style", "r": 255, "g": 128, "b": 0, "a": 255 },
+    { "op": "fill_circle", "cx": 5.0, "cy": 5.0, "r": 3.5 }
+  ]
+}

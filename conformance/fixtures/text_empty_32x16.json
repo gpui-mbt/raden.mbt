@@ -1,0 +1,25 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "text_empty_32x16",
+  "width": 32,
+  "height": 16,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "set_fill_style",
+      "r": 200,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    {
+      "op": "text",
+      "draw": "fill",
+      "font": "SourceSans3-Regular.ttf",
+      "size": 16,
+      "x": 4,
+      "y": 12,
+      "text": ""
+    }
+  ]
+}

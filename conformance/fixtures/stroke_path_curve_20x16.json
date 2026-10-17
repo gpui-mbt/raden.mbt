@@ -1,0 +1,54 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "stroke_path_curve_20x16",
+  "width": 20,
+  "height": 16,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "set_comp_op",
+      "value": "SrcOver"
+    },
+    {
+      "op": "set_stroke_style",
+      "r": 80,
+      "g": 0,
+      "b": 200,
+      "a": 255
+    },
+    {
+      "op": "set_stroke_width",
+      "value": 1.5
+    },
+    {
+      "op": "set_stroke_cap",
+      "value": "Round"
+    },
+    {
+      "op": "stroke_path",
+      "commands": [
+        {
+          "cmd": "move_to",
+          "x": 2.0,
+          "y": 8.0
+        },
+        {
+          "cmd": "quad_to",
+          "cx": 10.0,
+          "cy": 1.0,
+          "x": 18.0,
+          "y": 8.0
+        },
+        {
+          "cmd": "cubic_to",
+          "c1x": 14.0,
+          "c1y": 14.0,
+          "c2x": 6.0,
+          "c2y": 14.0,
+          "x": 2.0,
+          "y": 8.0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "blit_image_at_6x5",
+  "width": 6,
+  "height": 5,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcCopy" },
+    { "op": "set_fill_style", "r": 32, "g": 32, "b": 32, "a": 255 },
+    { "op": "fill_all" },
+    { "op": "set_comp_op", "value": "SrcOver" },
+    {
+      "op": "blit_image_at",
+      "x": 2.0,
+      "y": 1.0,
+      "image": {
+        "width": 2,
+        "height": 2,
+        "rgba8": [
+          255, 0, 0, 255, 0, 255, 0, 255,
+          0, 0, 255, 255, 255, 255, 0, 128
+        ]
+      }
+    }
+  ]
+}

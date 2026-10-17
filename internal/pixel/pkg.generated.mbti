@@ -1,0 +1,97 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "gpui-mbt/raden/internal/pixel"
+
+// Values
+pub fn a8_clear(UInt, UInt) -> UInt
+
+pub fn a8_plus(UInt, UInt) -> UInt
+
+pub fn a8_src_copy(UInt, UInt) -> UInt
+
+pub fn a8_src_over(UInt, UInt) -> UInt
+
+pub fn alpha_to_u8(Double) -> UInt
+
+pub fn comp_clear(UInt, UInt) -> UInt
+
+pub fn comp_clear_cov(UInt, UInt, UInt) -> UInt
+
+pub fn comp_color_burn(UInt, UInt) -> UInt
+
+pub fn comp_color_burn_simd(UInt, UInt) -> UInt
+
+pub fn comp_color_dodge(UInt, UInt) -> UInt
+
+pub fn comp_color_dodge_simd(UInt, UInt) -> UInt
+
+pub fn comp_darken(UInt, UInt) -> UInt
+
+pub fn comp_difference(UInt, UInt) -> UInt
+
+pub fn comp_dst_atop(UInt, UInt) -> UInt
+
+pub fn comp_dst_copy(UInt, UInt) -> UInt
+
+pub fn comp_dst_in(UInt, UInt) -> UInt
+
+pub fn comp_dst_out(UInt, UInt) -> UInt
+
+pub fn comp_dst_over(UInt, UInt) -> UInt
+
+pub fn comp_exclusion(UInt, UInt) -> UInt
+
+pub fn comp_generic_cov((UInt, UInt) -> UInt, UInt, UInt, UInt) -> UInt
+
+pub fn comp_hard_light(UInt, UInt) -> UInt
+
+pub fn comp_lighten(UInt, UInt) -> UInt
+
+pub fn comp_linear_burn(UInt, UInt) -> UInt
+
+pub fn comp_linear_light(UInt, UInt) -> UInt
+
+pub fn comp_minus(UInt, UInt) -> UInt
+
+pub fn comp_modulate(UInt, UInt) -> UInt
+
+pub fn comp_multiply(UInt, UInt) -> UInt
+
+pub fn comp_overlay(UInt, UInt) -> UInt
+
+pub fn comp_pin_light(UInt, UInt) -> UInt
+
+pub fn comp_plus(UInt, UInt) -> UInt
+
+pub fn comp_plus_cov(UInt, UInt, UInt) -> UInt
+
+pub fn comp_screen(UInt, UInt) -> UInt
+
+pub fn comp_soft_light(UInt, UInt) -> UInt
+
+pub fn comp_src_atop(UInt, UInt) -> UInt
+
+pub fn comp_src_copy(UInt, UInt) -> UInt
+
+pub fn comp_src_copy_cov(UInt, UInt, UInt) -> UInt
+
+pub fn comp_src_in(UInt, UInt) -> UInt
+
+pub fn comp_src_out(UInt, UInt) -> UInt
+
+pub fn comp_src_over(UInt, UInt) -> UInt
+
+pub fn comp_src_over_cov(UInt, UInt, UInt) -> UInt
+
+pub fn comp_xor(UInt, UInt) -> UInt
+
+pub fn premultiply_rgba(UInt, UInt, UInt, UInt) -> UInt
+
+pub fn scale_prgb32(UInt, UInt) -> UInt
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

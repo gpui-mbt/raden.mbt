@@ -95,6 +95,14 @@ parse/metrics、simple outline、compound、GSUB、GPOS、Context/exampleの順�
 
 ## 注記
 
-- 検証状態: 未実行（実装計画）。
+- 検証状態: 完了 (2026-10-17 実施)。
+  `font/` パッケージ (tables/glyph/shape/font) を上流 ~3,800 行から移植。
+  Source Sans 3 実フォントで 15 native test、破損 corpus 26 (native) /
+  11 (js) test。conformance に `text` op を追加し、glyph id /
+  cluster (UTF-8 byte index) / advance / offset を `shapes` meta で
+  厳密比較する (text_* 14 fixture + font_shaping_1400x500 の
+  上流 example 再現、計 95/95 pass)。fill_text/stroke_text は
+  パッケージ制約により `font::fill_text(ctx, ...)` 自由関数
+  (既知差分 #11)。
 - 本Issueは [issues/README.md](../README.md) のM4（Native統合・テキスト）に含まれ、gpui統合（RADEN-0010）とは別々に判定する。
 - 2026-10-16: polish-issue で実装可能な形式へ整備。issues/open から移動。内容は計画作成時のもので、実装・検証は未実行

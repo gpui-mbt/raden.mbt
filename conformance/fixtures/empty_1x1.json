@@ -1,0 +1,8 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "empty_1x1",
+  "width": 1,
+  "height": 1,
+  "pixel_format": "prgb32",
+  "commands": []
+}

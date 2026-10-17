@@ -1,0 +1,14 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "stroke_dash_line_20x6",
+  "width": 20,
+  "height": 6,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_stroke_style", "r": 0, "g": 0, "b": 0, "a": 255 },
+    { "op": "set_stroke_width", "value": 1.0 },
+    { "op": "set_stroke_dash", "array": [3.0, 2.0], "offset": 0.5 },
+    { "op": "stroke_line", "x0": 1.0, "y0": 3.0, "x1": 19.0, "y1": 3.0 }
+  ]
+}

@@ -1,0 +1,474 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "gpui-mbt/raden"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+
+// Errors
+pub(all) suberror RadenError {
+  InvalidInput(String)
+  UnsupportedFeature(String)
+  ResourceLimit(String)
+}
+pub fn RadenError::output(Self, &Logger) -> Unit
+pub fn RadenError::to_string(Self) -> String
+pub impl Show for RadenError
+
+// Types and methods
+pub(all) struct Arc {
+  cx : Double
+  cy : Double
+  rx : Double
+  ry : Double
+  start : Double
+  sweep : Double
+} derive(@debug.Debug)
+pub fn Arc::new(Double, Double, Double, Double, Double, Double) -> Self
+pub fn Arc::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Circle {
+  cx : Double
+  cy : Double
+  r : Double
+} derive(@debug.Debug)
+pub fn Circle::new(Double, Double, Double) -> Self
+pub fn Circle::to_repr(Self) -> @debug.Repr
+
+pub(all) enum CompOp {
+  SrcOver
+  SrcCopy
+  SrcIn
+  SrcOut
+  SrcAtop
+  DstOver
+  DstCopy
+  DstIn
+  DstOut
+  DstAtop
+  Xor
+  Clear
+  Plus
+  Minus
+  Modulate
+  Multiply
+  Screen
+  Overlay
+  Darken
+  Lighten
+  ColorDodge
+  ColorBurn
+  LinearBurn
+  LinearLight
+  PinLight
+  HardLight
+  SoftLight
+  Difference
+  Exclusion
+} derive(Eq, @debug.Debug)
+pub fn CompOp::equal(Self, Self) -> Bool
+pub fn CompOp::not_equal(Self, Self) -> Bool
+pub fn CompOp::output(Self, &Logger) -> Unit
+pub fn CompOp::to_repr(Self) -> @debug.Repr
+pub fn CompOp::to_string(Self) -> String
+
+pub(all) struct ConicGradientValues {
+  x0 : Double
+  y0 : Double
+  angle : Double
+} derive(Eq, @debug.Debug)
+pub fn ConicGradientValues::equal(Self, Self) -> Bool
+pub fn ConicGradientValues::not_equal(Self, Self) -> Bool
+pub fn ConicGradientValues::to_repr(Self) -> @debug.Repr
+
+pub struct Context {
+  // private fields
+}
+pub fn Context::apply_matrix(Self, Matrix2D) -> Unit
+pub fn Context::blit_image_at(Self, Double, Double, Image) -> Unit raise RadenError
+pub fn Context::blit_image_rect(Self, Rect, Image, Rect?) -> Unit raise RadenError
+pub fn Context::clear_all(Self) -> Unit
+pub fn Context::clear_rect(Self, Rect) -> Unit
+pub fn Context::clip_to_rect(Self, Rect) -> Unit
+pub fn Context::comp_op(Self) -> CompOp
+pub fn Context::end(Self) -> Unit
+pub fn Context::fill_all(Self) -> Unit raise RadenError
+pub fn Context::fill_alpha(Self) -> Double
+pub fn Context::fill_circle(Self, Circle) -> Unit raise RadenError
+pub fn Context::fill_color_prgb32(Self) -> UInt
+pub fn Context::fill_ellipse(Self, Ellipse) -> Unit raise RadenError
+pub fn Context::fill_gradient(Self) -> Gradient?
+pub fn Context::fill_path(Self, Path) -> Unit raise RadenError
+pub fn Context::fill_pattern(Self) -> Pattern?
+pub fn Context::fill_pie(Self, Arc) -> Unit raise RadenError
+pub fn Context::fill_polygon(Self, ArrayView[Point]) -> Unit raise RadenError
+pub fn Context::fill_rect(Self, Rect) -> Unit raise RadenError
+pub fn Context::fill_round_rect(Self, RoundRect) -> Unit raise RadenError
+pub fn Context::fill_rule(Self) -> FillRule
+pub fn Context::fill_triangle(Self, Triangle) -> Unit raise RadenError
+pub fn Context::global_alpha(Self) -> Double
+pub fn Context::matrix(Self) -> Matrix2D
+pub fn Context::new(Image, PipelineRuntime) -> Self
+pub fn Context::post_rotate(Self, Double) -> Unit
+pub fn Context::post_scale(Self, Double, Double) -> Unit
+pub fn Context::post_skew(Self, Double, Double) -> Unit
+pub fn Context::post_transform(Self, Matrix2D) -> Unit
+pub fn Context::post_translate(Self, Double, Double) -> Unit
+pub fn Context::reset_matrix(Self) -> Unit
+pub fn Context::restore(Self) -> Unit
+pub fn Context::restore_clipping(Self) -> Unit
+pub fn Context::rotate(Self, Double) -> Unit
+pub fn Context::rotate_around(Self, Double, Double, Double) -> Unit
+pub fn Context::save(Self) -> Unit
+pub fn Context::scale(Self, Double, Double) -> Unit
+pub fn Context::set_comp_op(Self, CompOp) -> Unit
+pub fn Context::set_fill_alpha(Self, Double) -> Unit
+pub fn Context::set_fill_rule(Self, FillRule) -> Unit
+pub fn Context::set_fill_style(Self, Rgba32) -> Unit
+pub fn Context::set_fill_style_gradient(Self, Gradient) -> Unit
+pub fn Context::set_fill_style_pattern(Self, Pattern) -> Unit
+pub fn Context::set_global_alpha(Self, Double) -> Unit
+pub fn Context::set_stroke_alpha(Self, Double) -> Unit
+pub fn Context::set_stroke_cap(Self, StrokeCap) -> Unit
+pub fn Context::set_stroke_dash_array(Self, ArrayView[Double]) -> Unit
+pub fn Context::set_stroke_dash_offset(Self, Double) -> Unit
+pub fn Context::set_stroke_end_cap(Self, StrokeCap) -> Unit
+pub fn Context::set_stroke_join(Self, StrokeJoin) -> Unit
+pub fn Context::set_stroke_miter_limit(Self, Double) -> Unit
+pub fn Context::set_stroke_start_cap(Self, StrokeCap) -> Unit
+pub fn Context::set_stroke_style(Self, Rgba32) -> Unit
+pub fn Context::set_stroke_style_gradient(Self, Gradient) -> Unit
+pub fn Context::set_stroke_style_pattern(Self, Pattern) -> Unit
+pub fn Context::set_stroke_width(Self, Double) -> Unit
+pub fn Context::skew(Self, Double, Double) -> Unit
+pub fn Context::stroke_alpha(Self) -> Double
+pub fn Context::stroke_circle(Self, Circle) -> Unit raise RadenError
+pub fn Context::stroke_color_prgb32(Self) -> UInt
+pub fn Context::stroke_dash_array(Self) -> ArrayView[Double]
+pub fn Context::stroke_dash_offset(Self) -> Double
+pub fn Context::stroke_ellipse(Self, Ellipse) -> Unit raise RadenError
+pub fn Context::stroke_end_cap(Self) -> StrokeCap
+pub fn Context::stroke_gradient(Self) -> Gradient?
+pub fn Context::stroke_join(Self) -> StrokeJoin
+pub fn Context::stroke_line(Self, Line) -> Unit raise RadenError
+pub fn Context::stroke_miter_limit(Self) -> Double
+pub fn Context::stroke_path(Self, Path) -> Unit raise RadenError
+pub fn Context::stroke_pattern(Self) -> Pattern?
+pub fn Context::stroke_polygon(Self, ArrayView[Point]) -> Unit raise RadenError
+pub fn Context::stroke_polyline(Self, ArrayView[Point]) -> Unit raise RadenError
+pub fn Context::stroke_rect(Self, Rect) -> Unit raise RadenError
+pub fn Context::stroke_round_rect(Self, RoundRect) -> Unit raise RadenError
+pub fn Context::stroke_start_cap(Self) -> StrokeCap
+pub fn Context::stroke_triangle(Self, Triangle) -> Unit raise RadenError
+pub fn Context::stroke_width(Self) -> Double
+pub fn Context::translate(Self, Double, Double) -> Unit
+pub fn Context::user_to_meta(Self) -> Unit
+
+pub(all) struct Ellipse {
+  cx : Double
+  cy : Double
+  rx : Double
+  ry : Double
+} derive(@debug.Debug)
+pub fn Ellipse::new(Double, Double, Double, Double) -> Self
+pub fn Ellipse::to_repr(Self) -> @debug.Repr
+
+pub(all) enum ExtendMode {
+  Pad
+  Repeat
+  Reflect
+} derive(Eq)
+pub fn ExtendMode::equal(Self, Self) -> Bool
+pub fn ExtendMode::not_equal(Self, Self) -> Bool
+pub fn ExtendMode::output(Self, &Logger) -> Unit
+pub fn ExtendMode::to_string(Self) -> String
+pub impl Show for ExtendMode
+
+pub(all) enum FillRule {
+  NonZero
+  EvenOdd
+} derive(Eq, @debug.Debug)
+pub fn FillRule::equal(Self, Self) -> Bool
+pub fn FillRule::not_equal(Self, Self) -> Bool
+pub fn FillRule::to_repr(Self) -> @debug.Repr
+
+pub struct Gradient {
+  values : GradientValues
+  stops : Array[GradientStop]
+  mut extend_mode : ExtendMode
+}
+pub fn Gradient::add_stop(Self, Double, Rgba32) -> Self
+pub fn Gradient::extend_mode(Self) -> ExtendMode
+pub fn Gradient::new_conic(Double, Double, Double) -> Self
+pub fn Gradient::new_linear(Double, Double, Double, Double) -> Self
+pub fn Gradient::new_radial(Double, Double, Double, Double, Double, Double) -> Self
+pub fn Gradient::set_extend_mode(Self, ExtendMode) -> Self
+pub fn Gradient::stops(Self) -> ArrayView[GradientStop]
+pub fn Gradient::values(Self) -> GradientValues
+
+pub(all) struct GradientStop {
+  offset : Double
+  color : Rgba32
+} derive(Eq, @debug.Debug)
+pub fn GradientStop::equal(Self, Self) -> Bool
+pub fn GradientStop::not_equal(Self, Self) -> Bool
+pub fn GradientStop::to_repr(Self) -> @debug.Repr
+
+pub(all) enum GradientValues {
+  Linear(LinearGradientValues)
+  Radial(RadialGradientValues)
+  Conic(ConicGradientValues)
+} derive(Eq, @debug.Debug)
+pub fn GradientValues::equal(Self, Self) -> Bool
+pub fn GradientValues::not_equal(Self, Self) -> Bool
+pub fn GradientValues::to_repr(Self) -> @debug.Repr
+
+pub struct Image {
+  // private fields
+}
+pub fn Image::data(Self) -> BytesView
+pub fn Image::format(Self) -> PixelFormat
+pub fn Image::from_rgba8(Int, Int, PixelFormat, BytesView) -> Self raise RadenError
+pub fn Image::height(Self) -> Int
+pub fn Image::new(Int, Int, PixelFormat) -> Self raise RadenError
+pub fn Image::stride(Self) -> Int
+pub fn Image::width(Self) -> Int
+
+pub(all) struct Line {
+  x0 : Double
+  y0 : Double
+  x1 : Double
+  y1 : Double
+} derive(@debug.Debug)
+pub fn Line::new(Double, Double, Double, Double) -> Self
+pub fn Line::to_repr(Self) -> @debug.Repr
+
+pub(all) struct LinearGradientValues {
+  x0 : Double
+  y0 : Double
+  x1 : Double
+  y1 : Double
+} derive(Eq, @debug.Debug)
+pub fn LinearGradientValues::equal(Self, Self) -> Bool
+pub fn LinearGradientValues::not_equal(Self, Self) -> Bool
+pub fn LinearGradientValues::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Matrix2D {
+  mut m00 : Double
+  mut m01 : Double
+  mut m10 : Double
+  mut m11 : Double
+  mut m20 : Double
+  mut m21 : Double
+} derive(Eq, @debug.Debug)
+pub fn Matrix2D::equal(Self, Self) -> Bool
+pub fn Matrix2D::identity() -> Self
+pub fn Matrix2D::invert(Self) -> Self?
+pub fn Matrix2D::is_identity(Self) -> Bool
+pub fn Matrix2D::map_point(Self, Double, Double) -> (Double, Double)
+pub fn Matrix2D::multiply(Self, Self) -> Self
+pub fn Matrix2D::new(Double, Double, Double, Double, Double, Double) -> Self
+pub fn Matrix2D::not_equal(Self, Self) -> Bool
+pub fn Matrix2D::post_rotate(Self, Double) -> Unit
+pub fn Matrix2D::post_scale(Self, Double, Double) -> Unit
+pub fn Matrix2D::post_skew(Self, Double, Double) -> Unit
+pub fn Matrix2D::post_transform(Self, Self) -> Unit
+pub fn Matrix2D::post_translate(Self, Double, Double) -> Unit
+pub fn Matrix2D::reset(Self) -> Unit
+pub fn Matrix2D::rotate(Self, Double) -> Unit
+pub fn Matrix2D::rotate_around(Self, Double, Double, Double) -> Unit
+pub fn Matrix2D::rotation(Double) -> Self
+pub fn Matrix2D::scale(Self, Double, Double) -> Unit
+pub fn Matrix2D::scaling(Double, Double) -> Self
+pub fn Matrix2D::skew(Self, Double, Double) -> Unit
+pub fn Matrix2D::skewing(Double, Double) -> Self
+pub fn Matrix2D::to_repr(Self) -> @debug.Repr
+pub fn Matrix2D::translate(Self, Double, Double) -> Unit
+pub fn Matrix2D::translation(Double, Double) -> Self
+
+pub struct Path {
+  // private fields
+}
+pub fn Path::add_circle(Self, Double, Double, Double) -> Unit
+pub fn Path::add_ellipse(Self, Double, Double, Double, Double) -> Unit
+pub fn Path::add_path(Self, Self) -> Unit raise RadenError
+pub fn Path::add_path_transformed(Self, Self, Matrix2D) -> Unit raise RadenError
+pub fn Path::add_path_translated(Self, Self, Double, Double) -> Unit raise RadenError
+pub fn Path::add_pie(Self, Double, Double, Double, Double, Double, Double) -> Unit
+pub fn Path::add_polygon(Self, ArrayView[Point]) -> Unit
+pub fn Path::add_polyline(Self, ArrayView[Point]) -> Unit
+pub fn Path::add_round_rect(Self, Double, Double, Double, Double, Double, Double) -> Unit
+pub fn Path::add_triangle(Self, Double, Double, Double, Double, Double, Double) -> Unit
+pub fn Path::arc_to(Self, Double, Double, Double, Double, Double, Double, Bool) -> Unit
+pub fn Path::bounding_box(Self) -> Rect?
+pub fn Path::clear(Self) -> Unit
+pub fn Path::close(Self) -> Unit
+pub fn Path::cmds(Self) -> ArrayView[PathCmd]
+pub fn Path::conic_to(Self, Double, Double, Double, Double, Double) -> Unit raise RadenError
+pub fn Path::conic_weights(Self) -> ArrayView[Double]
+pub fn Path::control_box(Self) -> Rect?
+pub fn Path::cubic_to(Self, Double, Double, Double, Double, Double, Double) -> Unit
+pub fn Path::is_empty(Self) -> Bool
+pub fn Path::length(Self) -> Int
+pub fn Path::line_to(Self, Double, Double) -> Unit
+pub fn Path::move_to(Self, Double, Double) -> Unit
+pub fn Path::new() -> Self
+pub fn Path::points(Self) -> ArrayView[Point]
+pub fn Path::quad_to(Self, Double, Double, Double, Double) -> Unit
+pub fn Path::smooth_cubic_to(Self, Double, Double, Double, Double) -> Unit raise RadenError
+pub fn Path::smooth_quad_to(Self, Double, Double) -> Unit raise RadenError
+pub fn Path::transform(Self, Matrix2D) -> Unit
+pub fn Path::translate(Self, Double, Double) -> Unit
+
+pub(all) enum PathCmd {
+  MoveTo
+  LineTo
+  QuadTo
+  ConicTo
+  CubicTo
+  Close
+} derive(Eq, @debug.Debug)
+pub fn PathCmd::equal(Self, Self) -> Bool
+pub fn PathCmd::not_equal(Self, Self) -> Bool
+pub fn PathCmd::to_repr(Self) -> @debug.Repr
+
+pub struct Pattern {
+  data : Bytes
+  width : Int
+  height : Int
+  src_stride : Int
+  mut transform : Matrix2D
+  mut filter : PatternFilter
+  mut extend_mode : ExtendMode
+}
+pub fn Pattern::extend_mode(Self) -> ExtendMode
+pub fn Pattern::filter(Self) -> PatternFilter
+pub fn Pattern::from_image(Image) -> Self raise RadenError
+pub fn Pattern::height(Self) -> Int
+pub fn Pattern::new(Bytes, Int, Int, Int) -> Self
+pub fn Pattern::set_extend_mode(Self, ExtendMode) -> Self
+pub fn Pattern::set_filter(Self, PatternFilter) -> Self
+pub fn Pattern::set_origin(Self, Double, Double) -> Self
+pub fn Pattern::set_transform(Self, Matrix2D) -> Self
+pub fn Pattern::transform(Self) -> Matrix2D
+pub fn Pattern::width(Self) -> Int
+
+pub(all) enum PatternFilter {
+  Nearest
+  Bilinear
+} derive(Eq)
+pub fn PatternFilter::equal(Self, Self) -> Bool
+pub fn PatternFilter::not_equal(Self, Self) -> Bool
+pub fn PatternFilter::output(Self, &Logger) -> Unit
+pub fn PatternFilter::to_string(Self) -> String
+pub impl Show for PatternFilter
+
+pub struct PipelineRuntime {
+  // private fields
+}
+pub fn PipelineRuntime::new() -> Self
+
+pub(all) enum PixelFormat {
+  Prgb32
+  Xrgb32
+  A8
+} derive(Eq, @debug.Debug)
+pub fn PixelFormat::bytes_per_pixel(Self) -> Int
+pub fn PixelFormat::equal(Self, Self) -> Bool
+pub fn PixelFormat::not_equal(Self, Self) -> Bool
+pub fn PixelFormat::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Point {
+  mut x : Double
+  mut y : Double
+} derive(Eq, @debug.Debug)
+pub fn Point::equal(Self, Self) -> Bool
+pub fn Point::new(Double, Double) -> Self
+pub fn Point::not_equal(Self, Self) -> Bool
+pub fn Point::to_repr(Self) -> @debug.Repr
+
+pub(all) struct RadialGradientValues {
+  x0 : Double
+  y0 : Double
+  x1 : Double
+  y1 : Double
+  r0 : Double
+  r1 : Double
+} derive(Eq, @debug.Debug)
+pub fn RadialGradientValues::equal(Self, Self) -> Bool
+pub fn RadialGradientValues::not_equal(Self, Self) -> Bool
+pub fn RadialGradientValues::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Rect {
+  x : Double
+  y : Double
+  w : Double
+  h : Double
+} derive(@debug.Debug)
+pub fn Rect::new(Double, Double, Double, Double) -> Self
+pub fn Rect::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Rgba32 {
+  value : UInt
+} derive(Eq, @debug.Debug)
+pub fn Rgba32::a(Self) -> UInt
+pub fn Rgba32::b(Self) -> UInt
+pub fn Rgba32::equal(Self, Self) -> Bool
+pub fn Rgba32::g(Self) -> UInt
+pub fn Rgba32::is_opaque(Self) -> Bool
+pub fn Rgba32::is_transparent(Self) -> Bool
+pub fn Rgba32::new(UInt, UInt, UInt, UInt) -> Self
+pub fn Rgba32::not_equal(Self, Self) -> Bool
+pub fn Rgba32::r(Self) -> UInt
+pub fn Rgba32::rgb(UInt, UInt, UInt) -> Self
+pub fn Rgba32::to_prgb32(Self) -> UInt
+pub fn Rgba32::to_repr(Self) -> @debug.Repr
+pub fn Rgba32::to_uint(Self) -> UInt
+
+pub(all) struct RoundRect {
+  x : Double
+  y : Double
+  w : Double
+  h : Double
+  rx : Double
+  ry : Double
+} derive(@debug.Debug)
+pub fn RoundRect::new(Double, Double, Double, Double, Double, Double) -> Self
+pub fn RoundRect::to_repr(Self) -> @debug.Repr
+
+pub(all) enum StrokeCap {
+  Butt
+  Square
+  Round
+} derive(Eq, @debug.Debug)
+pub fn StrokeCap::equal(Self, Self) -> Bool
+pub fn StrokeCap::not_equal(Self, Self) -> Bool
+pub fn StrokeCap::to_repr(Self) -> @debug.Repr
+
+pub(all) enum StrokeJoin {
+  MiterClip
+  MiterBevel
+  MiterRound
+  Bevel
+  Round
+} derive(Eq, @debug.Debug)
+pub fn StrokeJoin::equal(Self, Self) -> Bool
+pub fn StrokeJoin::not_equal(Self, Self) -> Bool
+pub fn StrokeJoin::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Triangle {
+  x0 : Double
+  y0 : Double
+  x1 : Double
+  y1 : Double
+  x2 : Double
+  y2 : Double
+} derive(@debug.Debug)
+pub fn Triangle::new(Double, Double, Double, Double, Double, Double) -> Self
+pub fn Triangle::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits

@@ -1,0 +1,13 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "scene_basic_drawing_1280x720",
+  "width": 1280,
+  "height": 720,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "scene",
+      "name": "basic_drawing"
+    }
+  ]
+}

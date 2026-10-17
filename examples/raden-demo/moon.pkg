@@ -1,0 +1,12 @@
+import {
+  "gpui-mbt/raden/examples/scenes",
+  "gpui-mbt/raden/internal/sha256",
+  "moonbitlang/async",
+  "moonbitlang/async/fs",
+  "moonbitlang/core/env",
+  "moonbitlang/core/string",
+}
+
+supported_targets = "+native"
+
+pkgtype(kind: "executable")

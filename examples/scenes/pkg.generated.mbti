@@ -1,0 +1,35 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "gpui-mbt/raden/examples/scenes"
+
+import {
+  "gpui-mbt/raden",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn animation_t(Int64, Int64) -> Double
+
+pub fn canonical_rgba8(@raden.Image) -> Bytes
+
+pub fn render(@raden.Context, SceneName, Double, Double, Double) -> Unit raise @raden.RadenError
+
+pub fn render_to_rgba8(SceneName, Int, Int, Double) -> Bytes raise @raden.RadenError
+
+// Errors
+
+// Types and methods
+pub(all) enum SceneName {
+  BasicDrawing
+  GradientDrawing
+  StrokeDrawing
+  BlitClipPatternPaths
+  Animation
+} derive(Eq, @debug.Debug)
+pub fn SceneName::equal(Self, Self) -> Bool
+pub fn SceneName::not_equal(Self, Self) -> Bool
+pub fn SceneName::parse(String) -> Self raise @raden.RadenError
+pub fn SceneName::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits

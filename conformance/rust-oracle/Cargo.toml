@@ -1,0 +1,15 @@
+[package]
+name = "raden-oracle"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.94"
+publish = false
+
+[dependencies]
+raden = { git = "https://github.com/shiguredo/raden", rev = "afb752e17a69fef8af981251b68de22a7597ff01" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+
+[profile.release]
+debug = false

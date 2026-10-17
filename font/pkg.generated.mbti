@@ -1,0 +1,113 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "gpui-mbt/raden/font"
+
+import {
+  "gpui-mbt/raden",
+}
+
+// Values
+pub fn fill_text(@raden.Context, Double, Double, Font, String) -> Unit raise @raden.RadenError
+
+pub fn stroke_text(@raden.Context, Double, Double, Font, String) -> Unit raise @raden.RadenError
+
+// Errors
+pub(all) suberror FontError {
+  Io(String)
+  InvalidData(String)
+}
+
+// Types and methods
+pub struct Font {
+  face : FontFace
+  size : Double
+  scale : Double
+  mut feature_settings : FontFeatureSettings
+}
+pub fn Font::append_glyph_outline(Self, Int, Double, Double, @raden.Path) -> Unit raise FontError
+pub fn Font::ascent(Self) -> Double
+pub fn Font::cap_height(Self) -> Double?
+pub fn Font::clone_with_features(Self, FontFeatureSettings) -> Self
+pub fn Font::descent(Self) -> Double
+pub fn Font::feature_settings(Self) -> FontFeatureSettings
+pub fn Font::from_face(FontFace, Double) -> Self
+pub fn Font::glyph_advance(Self, Int) -> Double
+pub fn Font::glyph_bounds(Self, Int) -> GlyphBounds?
+pub fn Font::line_gap(Self) -> Double
+pub fn Font::map_char_to_glyph(Self, Char) -> Int
+pub fn Font::measure_text(Self, String) -> TextMetrics
+pub fn Font::scale(Self) -> Double
+pub fn Font::set_feature_settings(Self, FontFeatureSettings) -> Unit
+pub fn Font::shape(Self, String) -> GlyphBuffer
+pub fn Font::shape_into(Self, String, GlyphBuffer) -> Unit
+pub fn Font::size(Self) -> Double
+pub fn Font::with_features(FontFace, Double, FontFeatureSettings) -> Self
+pub fn Font::x_height(Self) -> Double?
+
+pub struct FontData {
+  data : Bytes
+}
+pub fn FontData::data(Self) -> Bytes
+pub fn FontData::from_bytes(Bytes) -> Self
+
+pub struct FontFace {
+  data : Bytes
+  tables : ParsedTables
+}
+pub fn FontFace::ascent(Self) -> Int
+pub fn FontFace::cap_height(Self) -> Int?
+pub fn FontFace::descent(Self) -> Int
+pub fn FontFace::from_data(FontData, Int) -> Self raise FontError
+pub fn FontFace::glyph_bounds(Self, Int) -> GlyphBounds?
+pub fn FontFace::line_gap(Self) -> Int
+pub fn FontFace::units_per_em(Self) -> Int
+pub fn FontFace::x_height(Self) -> Int?
+
+pub struct FontFeatureSettings {
+  kern : Bool
+  liga : Bool
+  clig : Bool
+}
+pub fn FontFeatureSettings::default() -> Self
+pub fn FontFeatureSettings::none() -> Self
+pub fn FontFeatureSettings::with_clig(Self, Bool) -> Self
+pub fn FontFeatureSettings::with_kern(Self, Bool) -> Self
+pub fn FontFeatureSettings::with_liga(Self, Bool) -> Self
+
+pub struct GlyphBounds {
+  x_min : Double
+  y_min : Double
+  x_max : Double
+  y_max : Double
+}
+
+pub struct GlyphBuffer {
+  glyph_ids : Array[Int]
+  placements_ : Array[GlyphPlacement]
+  clusters : Array[Int]
+}
+pub fn GlyphBuffer::cluster(Self, Int) -> Int?
+pub fn GlyphBuffer::glyph_id(Self, Int) -> Int?
+pub fn GlyphBuffer::is_empty(Self) -> Bool
+pub fn GlyphBuffer::is_well_formed(Self) -> Bool
+pub fn GlyphBuffer::length(Self) -> Int
+pub fn GlyphBuffer::new() -> Self
+pub fn GlyphBuffer::placement(Self, Int) -> GlyphPlacement?
+
+pub struct GlyphPlacement {
+  mut offset_x : Double
+  mut offset_y : Double
+  mut advance : Double
+}
+
+type ParsedTables
+
+pub struct TextMetrics {
+  advance : Double
+  bounding_box : GlyphBounds?
+  leading_bearing : Double
+  trailing_bearing : Double
+}
+
+// Type aliases
+
+// Traits

@@ -1,0 +1,13 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "clear_rect_5x3",
+  "width": 5,
+  "height": 3,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcCopy" },
+    { "op": "set_fill_style", "r": 111, "g": 222, "b": 33, "a": 255 },
+    { "op": "fill_all" },
+    { "op": "clear_rect", "x": 1, "y": 0, "w": 2, "h": 3 }
+  ]
+}

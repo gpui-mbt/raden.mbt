@@ -1,0 +1,26 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "fill_path_matrix_12x8",
+  "width": 12,
+  "height": 8,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "translate", "tx": 2.0, "ty": 1.0 },
+    { "op": "scale", "sx": 1.5, "sy": 1.5 },
+    { "op": "set_fill_style", "r": 128, "g": 0, "b": 128, "a": 255 },
+    { "op": "fill_rect", "x": 1.0, "y": 1.0, "w": 4.0, "h": 3.0 },
+    { "op": "reset_matrix" },
+    { "op": "rotate", "angle": 0.7853981633974483 },
+    { "op": "set_fill_style", "r": 255, "g": 255, "b": 0, "a": 255 },
+    {
+      "op": "fill_path",
+      "commands": [
+        { "cmd": "move_to", "x": 6.0, "y": 2.0 },
+        { "cmd": "line_to", "x": 9.0, "y": 2.0 },
+        { "cmd": "line_to", "x": 7.5, "y": 5.0 },
+        { "cmd": "close" }
+      ]
+    }
+  ]
+}

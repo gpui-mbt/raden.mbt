@@ -1,0 +1,15 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "gpui-mbt/raden/internal/sha256"
+
+// Values
+pub fn sha256(BytesView) -> Bytes
+
+pub fn sha256_hex(BytesView) -> String
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

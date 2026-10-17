@@ -1,0 +1,49 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "stroke_miter_limit_16x12",
+  "width": 16,
+  "height": 12,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "set_comp_op",
+      "value": "SrcOver"
+    },
+    {
+      "op": "set_stroke_style",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    {
+      "op": "set_stroke_width",
+      "value": 3.0
+    },
+    {
+      "op": "set_stroke_join",
+      "value": "MiterClip"
+    },
+    {
+      "op": "set_stroke_miter_limit",
+      "value": 1.5
+    },
+    {
+      "op": "stroke_polyline",
+      "points": [
+        [
+          2.0,
+          9.0
+        ],
+        [
+          6.0,
+          9.0
+        ],
+        [
+          14.0,
+          3.0
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "srcover_nested_alpha_7x3",
+  "width": 7,
+  "height": 3,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcCopy" },
+    { "op": "set_fill_style", "r": 255, "g": 255, "b": 255, "a": 255 },
+    { "op": "fill_all" },
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_fill_style", "r": 255, "g": 0, "b": 0, "a": 128 },
+    { "op": "fill_rect", "x": 0, "y": 0, "w": 5, "h": 3 },
+    { "op": "set_fill_style", "r": 0, "g": 0, "b": 255, "a": 64 },
+    { "op": "fill_rect", "x": 2, "y": 0, "w": 5, "h": 3 }
+  ]
+}

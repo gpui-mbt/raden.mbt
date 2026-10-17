@@ -1,0 +1,76 @@
+{
+  "schema": "raden.examples.v1",
+  "upstream_sha": "afb752e17a69fef8af981251b68de22a7597ff01",
+  "notes": "status: ready = scene を Native/JS headless で再現可能 (oracle raw byte 一致)。blocked = 依存未実装または出典未確認で、実行要求は非 0 exit。raw_sha256 は canonical RGBA8 (oracle 基準)。",
+  "examples": [
+    {
+      "name": "basic_drawing",
+      "status": "ready",
+      "upstream": "examples/basic_drawing.rs",
+      "canonical_size": [1280, 720],
+      "raw_sha256": "c3b545fd6edc87b21a5761e8b0a9a9ceda77be9aa21915607fad17619694ebe4",
+      "depends_on": ["RADEN-0003"]
+    },
+    {
+      "name": "gradient_drawing",
+      "status": "ready",
+      "upstream": "examples/gradient_drawing.rs",
+      "canonical_size": [1280, 720],
+      "raw_sha256": "61fd7aa9d49466ebcef192871e5688d5e0d278484fb755ffd10950a9cb79fab7",
+      "depends_on": ["RADEN-0007"]
+    },
+    {
+      "name": "stroke_drawing",
+      "status": "ready",
+      "upstream": "examples/stroke_drawing.rs",
+      "canonical_size": [1280, 720],
+      "raw_sha256": "19c4eec073c2bdb198e37f874ceabc9c1ca509606b349302ffc7276be842de82",
+      "depends_on": ["RADEN-0006"]
+    },
+    {
+      "name": "blit_clip_pattern_paths",
+      "status": "ready",
+      "upstream": "examples/blit_clip_pattern_paths.rs",
+      "canonical_size": [1280, 720],
+      "raw_sha256": "96afedf5b80a3493c80f78cc8dd7c4f4d05e1968773895b28471188094627f24",
+      "depends_on": ["RADEN-0004", "RADEN-0007"],
+      "notes": "smooth_quad_to / smooth_cubic_to / conic_to / arc_to の拡張パス命令を含む"
+    },
+    {
+      "name": "animation",
+      "status": "ready",
+      "upstream": "examples/animation.rs",
+      "canonical_size": [1280, 720],
+      "time_base": "t = frame / fps (実時間不使用)",
+      "raw_sha256": {
+        "frame0_1280x720": "c8d67c2973499b766318e8599076787f84acec63a01535fc5dfe508f0306aa66",
+        "frame30_1280x720": "e26390f92fa19a7a217e09ca9ef8e279b42e76ee0789449e3c8b717518116cc7",
+        "frame90_640x360": "407d47aa55b532e753eb4b1e1cc55235ade71342ae2e5b37bb9c51dc02baf20c"
+      },
+      "depends_on": ["RADEN-0005"],
+      "notes": "上流の --duration ベンチモードは raw-player 依存。ここでは固定 frame で静止画比較する"
+    },
+    {
+      "name": "tiger",
+      "status": "blocked",
+      "upstream": "examples/tiger/",
+      "reason": "tiger_data は AmanithVG (OpenVG) 由来で Blend2D bl_demo_tiger.h 経由。再配布条件 (zlib license 帰属) の確認が取れるまでデータを同梱しない",
+      "unblock": "出典台帳と再配布条件の確認後にデータ変換 (変換 script + source hash + command/point 数を記録)",
+      "depends_on": ["RADEN-0006", "出典確認"]
+    },
+    {
+      "name": "raden_player",
+      "status": "blocked",
+      "upstream": "examples/raden_player.rs",
+      "reason": "fill_text (Font/FontFace) が必要。RADEN-0011 待ち。本 Issue で VideoPlayer 互換を名乗らない",
+      "depends_on": ["RADEN-0011"]
+    },
+    {
+      "name": "font_shaping",
+      "status": "blocked",
+      "upstream": "examples/font_shaping.rs",
+      "reason": "FontData/FontFace/FontFeatureSettings が必要。RADEN-0011 待ち",
+      "depends_on": ["RADEN-0011"]
+    }
+  ]
+}

@@ -1,0 +1,320 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "comp_ops_span_42x35",
+  "width": 42,
+  "height": 35,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "set_comp_op",
+      "value": "SrcCopy"
+    },
+    {
+      "op": "set_fill_style",
+      "r": 60,
+      "g": 120,
+      "b": 180,
+      "a": 200
+    },
+    {
+      "op": "fill_all"
+    },
+    {
+      "op": "set_fill_style",
+      "r": 200,
+      "g": 100,
+      "b": 50,
+      "a": 128
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SrcOver"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 4.0,
+      "cy": 4.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SrcCopy"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 10.0,
+      "cy": 4.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SrcIn"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 16.0,
+      "cy": 4.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SrcOut"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 22.0,
+      "cy": 4.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SrcAtop"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 28.0,
+      "cy": 4.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "DstOver"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 34.0,
+      "cy": 4.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "DstCopy"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 40.0,
+      "cy": 4.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "DstIn"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 4.0,
+      "cy": 10.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "DstOut"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 10.0,
+      "cy": 10.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "DstAtop"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 16.0,
+      "cy": 10.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Xor"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 22.0,
+      "cy": 10.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Clear"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 28.0,
+      "cy": 10.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Plus"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 34.0,
+      "cy": 10.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Minus"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 40.0,
+      "cy": 10.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Modulate"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 4.0,
+      "cy": 16.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Multiply"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 10.0,
+      "cy": 16.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Screen"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 16.0,
+      "cy": 16.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Overlay"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 22.0,
+      "cy": 16.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Darken"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 28.0,
+      "cy": 16.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Lighten"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 34.0,
+      "cy": 16.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "ColorDodge"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 40.0,
+      "cy": 16.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "ColorBurn"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 4.0,
+      "cy": 22.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "LinearBurn"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 10.0,
+      "cy": 22.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "LinearLight"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 16.0,
+      "cy": 22.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "PinLight"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 22.0,
+      "cy": 22.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "HardLight"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 28.0,
+      "cy": 22.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "SoftLight"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 34.0,
+      "cy": 22.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Difference"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 40.0,
+      "cy": 22.0,
+      "r": 2.5
+    },
+    {
+      "op": "set_comp_op",
+      "value": "Exclusion"
+    },
+    {
+      "op": "fill_circle",
+      "cx": 4.0,
+      "cy": 28.0,
+      "r": 2.5
+    }
+  ]
+}

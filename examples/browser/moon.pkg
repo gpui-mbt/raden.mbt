@@ -1,0 +1,21 @@
+import {
+  "gpui-mbt/raden",
+  "gpui-mbt/raden/examples/scenes",
+  "gpui-mbt/raden/internal/sha256",
+}
+
+supported_targets = "+js"
+
+options(
+  link: {
+    "js": {
+      "exports": [
+        "render_scene_rgba8",
+        "error_message",
+        "sha256_hex",
+        "candidate_info",
+      ],
+      "format": "esm",
+    },
+  },
+)

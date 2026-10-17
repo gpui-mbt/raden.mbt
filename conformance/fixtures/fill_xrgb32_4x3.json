@@ -1,0 +1,14 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "fill_xrgb32_4x3",
+  "width": 4,
+  "height": 3,
+  "pixel_format": "xrgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_fill_style", "r": 10, "g": 20, "b": 30, "a": 255 },
+    { "op": "fill_all" },
+    { "op": "set_fill_style", "r": 200, "g": 100, "b": 50, "a": 128 },
+    { "op": "fill_rect", "x": 1.0, "y": 0.0, "w": 2.0, "h": 3.0 }
+  ]
+}

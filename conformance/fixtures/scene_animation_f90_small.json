@@ -1,0 +1,1 @@
+{"schema":"raden.fixture.v1","fixture_id":"scene_animation_f90_small","width":640,"height":360,"pixel_format":"prgb32","commands":[{"op":"scene","name":"animation","frame":90,"fps":60}]}

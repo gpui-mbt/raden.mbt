@@ -1,0 +1,25 @@
+_build/
+target/
+.mooncakes/
+.repos/
+conformance/reference/
+conformance/results/
+examples/browser/dist/
+*.bmp
+examples/browser/site/raden-browser.js
+examples/browser/site/manifest.json
+examples/browser/site/reference/
+examples/browser/e2e/node_modules/
+
+# RADEN-0012: CI レポート・ベンチ成果物・consumer workspace
+ci/jobs/
+ci/logs/
+ci/report.json
+conformance/bench/oracle_bench.json
+conformance/bench/candidate_bench.json
+conformance/bench/report.json
+consumer/moon.work
+consumer/_build/
+consumer/.mooncakes/
+conformance/candidate/
+conformance/report.json

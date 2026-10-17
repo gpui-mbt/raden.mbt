@@ -1,0 +1,12 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "fill_all_srccopy_3x2",
+  "width": 3,
+  "height": 2,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcCopy" },
+    { "op": "set_fill_style", "r": 32, "g": 32, "b": 96, "a": 255 },
+    { "op": "fill_all" }
+  ]
+}

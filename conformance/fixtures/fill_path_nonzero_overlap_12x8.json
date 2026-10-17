@@ -1,0 +1,27 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "fill_path_nonzero_overlap_12x8",
+  "width": 12,
+  "height": 8,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_fill_rule", "value": "NonZero" },
+    { "op": "set_fill_style", "r": 0, "g": 255, "b": 0, "a": 200 },
+    {
+      "op": "fill_path",
+      "commands": [
+        { "cmd": "move_to", "x": 1.0, "y": 1.0 },
+        { "cmd": "line_to", "x": 7.0, "y": 1.0 },
+        { "cmd": "line_to", "x": 7.0, "y": 7.0 },
+        { "cmd": "line_to", "x": 1.0, "y": 7.0 },
+        { "cmd": "close" },
+        { "cmd": "move_to", "x": 3.0, "y": 2.0 },
+        { "cmd": "line_to", "x": 10.0, "y": 2.0 },
+        { "cmd": "line_to", "x": 10.0, "y": 6.0 },
+        { "cmd": "line_to", "x": 3.0, "y": 6.0 },
+        { "cmd": "close" }
+      ]
+    }
+  ]
+}

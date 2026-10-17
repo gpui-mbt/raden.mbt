@@ -103,6 +103,18 @@ Depends-on: RADEN-0002, RADEN-0008
 
 ## 注記
 
-- 検証状態: 未実行（実装計画）。publish/deployも未実行。
+- 検証状態: 完了 (2026-10-17 実施)。publish/deploy は未実行。
+  - `scripts/run_checks.sh` + `check_gate.py`: required 6 job の
+    fail-closed 集約。fault injection 8 ケース全件拒否を実測。
+  - `conformance/run_bench.sh`: 13 fixture × cold/warm、p50/p95、
+    hash gate 付きレポート。baseline: native release、
+    720p/1080p で candidate は oracle の約 3〜7x (目標は
+    計測後に固定する方針のため budget 未設定)。
+  - `consumer/` + `run_consumer_test.sh`: 独立 module が
+    moon work 経由で公開 API のみ使用し native/js 両方で描画成功。
+  - `release/manifest.json` + `inspect_artifact.sh`: 宣言範囲と
+    artifact 検査 (200 files、混入/秘密情報なし)。
+  - `docs/mutation-and-negative-controls.md`: 負の対照一覧と
+    mutation survivor の分類方針。
 - 本Issueは [issues/README.md](../README.md) のM5（実用化）に含まれる。performance予算はbaseline計測後に固定する。
 - 2026-10-16: polish-issue で実装可能な形式へ整備。issues/open から移動。内容は計画作成時のもので、実装・検証は未実行

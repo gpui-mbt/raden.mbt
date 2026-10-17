@@ -1,0 +1,53 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "stroke_polyline_bevel_20x14",
+  "width": 20,
+  "height": 14,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "set_comp_op",
+      "value": "SrcOver"
+    },
+    {
+      "op": "set_stroke_style",
+      "r": 40,
+      "g": 200,
+      "b": 40,
+      "a": 255
+    },
+    {
+      "op": "set_stroke_width",
+      "value": 2.5
+    },
+    {
+      "op": "set_stroke_join",
+      "value": "Bevel"
+    },
+    {
+      "op": "set_stroke_cap",
+      "value": "Butt"
+    },
+    {
+      "op": "stroke_polyline",
+      "points": [
+        [
+          2.0,
+          11.0
+        ],
+        [
+          7.0,
+          3.0
+        ],
+        [
+          12.0,
+          9.0
+        ],
+        [
+          18.0,
+          3.0
+        ]
+      ]
+    }
+  ]
+}

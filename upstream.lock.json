@@ -1,0 +1,67 @@
+{
+  "schema": "raden.upstream-lock.v1",
+  "confirmed_at": "2026-10-17",
+  "upstream": {
+    "repository": "https://github.com/shiguredo/raden",
+    "commit": "afb752e17a69fef8af981251b68de22a7597ff01",
+    "cargo_package": "raden",
+    "cargo_version": "2026.2.0",
+    "license": "Apache-2.0",
+    "cargo_rust_version_declared": "1.94",
+    "note": "cargo rust-version は宣言値。依存解決を含む --locked ビルドで実測したツールチェーンは下記の通り"
+  },
+  "port_base": {
+    "repository": "gpui-mbt/raden (local)",
+    "baseline_commit": "be6ce812cec10c5170b4ec98627cf3c0af0bf124"
+  },
+  "cargo_lock": {
+    "path": "conformance/rust-oracle/Cargo.lock",
+    "sha256": "b8ab2f1a00fb72ec7c9c7b5954f2ea588805352576ea68febcbcfe7cf9c16485",
+    "note": "raden を git rev 固定で参照し依存を --locked で解決した結果"
+  },
+  "toolchains": {
+    "rust": {
+      "channel": "1.94.0",
+      "rustc": "rustc 1.94.0 (4a4ef493e 2026-03-02)",
+      "pin": "conformance/rust-oracle/rust-toolchain.toml",
+      "note": "rust-toolchain.toml の channel = \"1.94.0\" で解決。raden は rust-version 1.94 を要求するため stable (1.92) ではビルド不可"
+    },
+    "moonbit": {
+      "moon": "moon 0.1.20261012 (748b63c 2026-10-12)",
+      "moonc": "moonc v0.10.15+943464bfa (2026-10-12)",
+      "moonrun": "moonrun 0.1.20261012 (748b63c 2026-10-12)",
+      "note": "moon version --all の実測出力"
+    },
+    "node": {
+      "version": "v24.22.0",
+      "note": "--target js のテスト実行に使用"
+    }
+  },
+  "targets": {
+    "native": {
+      "status": "implemented",
+      "os_arch": "linux x86_64",
+      "note": "moon --target native でコンパイル・テスト実行済み"
+    },
+    "js": {
+      "status": "implemented",
+      "runtime": "node v24.22.0",
+      "note": "moon --target js でコンパイル・テスト実行済み"
+    },
+    "wasm": { "status": "not_verified" },
+    "wasm-gc": { "status": "not_verified" },
+    "windows": { "status": "not_verified" },
+    "macos-apple-silicon": { "status": "not_verified" },
+    "macos-intel": { "status": "out_of_scope" }
+  },
+  "assets": {
+    "tiger_data": {
+      "status": "pending_provenance_check",
+      "note": "上流 examples/tiger/tiger_data.rs の出典・再配布条件を確認するまで fixture を blocked として扱う"
+    },
+    "fonts": {
+      "status": "pending_provenance_check",
+      "note": "配布フォントの出典・再配布条件を確認するまで font fixture を blocked として扱う"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "clip_fill_8x6",
+  "width": 8,
+  "height": 6,
+  "pixel_format": "prgb32",
+  "commands": [
+    { "op": "set_comp_op", "value": "SrcCopy" },
+    { "op": "set_fill_style", "r": 200, "g": 200, "b": 200, "a": 255 },
+    { "op": "fill_all" },
+    { "op": "clip_to_rect", "x": 2.0, "y": 1.0, "w": 4.0, "h": 3.0 },
+    { "op": "set_comp_op", "value": "SrcOver" },
+    { "op": "set_fill_style", "r": 255, "g": 0, "b": 0, "a": 255 },
+    {
+      "op": "fill_path",
+      "commands": [
+        { "cmd": "move_to", "x": 0.0, "y": 0.0 },
+        { "cmd": "line_to", "x": 8.0, "y": 0.0 },
+        { "cmd": "line_to", "x": 4.0, "y": 6.0 },
+        { "cmd": "close" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "scene_animation_f90_1920x1080",
+  "width": 1920,
+  "height": 1080,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "scene",
+      "name": "animation",
+      "frame": 90,
+      "fps": 60
+    }
+  ]
+}
