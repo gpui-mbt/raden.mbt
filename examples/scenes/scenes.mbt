@@ -468,7 +468,9 @@ fn hsv_to_rgb(h : Double, s : Double, v : Double) -> (Byte, Byte, Byte) {
 }
 
 ///|
-fn animation_frame(
+/// 上流 animation/raden_player 共通の shape scene。
+/// raden_player はこの後にフォントのオーバーレイを描く。
+pub fn animation_frame(
   ctx : @raden.Context,
   t : Double,
   w : Double,

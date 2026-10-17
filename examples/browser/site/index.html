@@ -42,6 +42,9 @@
     border: 1px solid var(--line); border-radius: 4px;
   }
   canvas { display: block; image-rendering: pixelated; }
+  .overlay { position: absolute; left: 0; top: 0; pointer-events: none; }
+  .custom-controls { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; }
+  .custom-controls[hidden] { display: none; }
   .checker canvas { background:
     repeating-conic-gradient(#2a2e3d 0% 25%, #202432 0% 50%) 0 0 / 16px 16px; }
   .status {
@@ -84,6 +87,45 @@
   <button id="download">download png</button>
 </div>
 
+<div class="controls custom-controls" id="custom-controls" hidden>
+  <label>fill rule
+    <select id="c-fill-rule"><option value="nonzero">nonzero</option><option value="evenodd">evenodd</option></select>
+  </label>
+  <label>matrix tx <input id="c-tx" type="number" value="0" step="1"></label>
+  <label>ty <input id="c-ty" type="number" value="0" step="1"></label>
+  <label>sx <input id="c-sx" type="number" value="1" step="0.1"></label>
+  <label>sy <input id="c-sy" type="number" value="1" step="0.1"></label>
+  <label>rotate <input id="c-rotate" type="number" value="0" step="1">°</label>
+  <label><input id="c-clip" type="checkbox"> clip</label>
+  <label>x <input id="c-clip-x" type="number" value="128"></label>
+  <label>y <input id="c-clip-y" type="number" value="128"></label>
+  <label>w <input id="c-clip-w" type="number" value="256"></label>
+  <label>h <input id="c-clip-h" type="number" value="256"></label>
+  <label>paint
+    <select id="c-paint-kind"><option value="solid">solid</option><option value="linear">linear</option></select>
+  </label>
+  <label>color <input id="c-color" type="color" value="#50b4ff"></label>
+  <label>alpha <input id="c-alpha" type="number" min="0" max="255" value="255"></label>
+  <label>stop0 <input id="c-stop0" type="color" value="#ff5028"></label>
+  <label>stop1 <input id="c-stop1" type="color" value="#2878ff"></label>
+  <label><input id="c-stroke" type="checkbox"> stroke</label>
+  <label>width <input id="c-stroke-width" type="number" value="6" min="0" step="0.5"></label>
+  <label>cap
+    <select id="c-cap"><option value="butt">butt</option><option value="square">square</option><option value="round">round</option></select>
+  </label>
+  <label>join
+    <select id="c-join"><option value="miter_clip">miter_clip</option><option value="miter_bevel">miter_bevel</option><option value="miter_round">miter_round</option><option value="bevel">bevel</option><option value="round">round</option></select>
+  </label>
+  <label>dash <input id="c-dash" type="text" value="12,8" size="8"></label>
+  <label>comp op
+    <select id="c-comp-op"><option>SrcOver</option><option>SrcCopy</option><option>Multiply</option><option>Screen</option><option>Xor</option><option>Clear</option><option>Plus</option><option>Difference</option></select>
+  </label>
+  <label>overlay
+    <select id="c-overlay"><option value="none">none</option><option value="edges">edges</option></select>
+  </label>
+  <button id="c-reset-points">reset points</button>
+</div>
+
 <div class="panes">
   <div class="pane">
     <h2>Rust oracle reference (fixed)</h2>
@@ -91,7 +133,10 @@
   </div>
   <div class="pane">
     <h2>MoonBit live</h2>
-    <div class="canvas-wrap checker"><canvas id="live-canvas"></canvas></div>
+    <div class="canvas-wrap checker">
+      <canvas id="live-canvas"></canvas>
+      <canvas id="live-overlay" class="overlay"></canvas>
+    </div>
   </div>
 </div>
 

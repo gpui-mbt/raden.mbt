@@ -29,24 +29,24 @@
       "gradient (linear/radial/conic) / pattern / blit",
       "font (TrueType glyf、GSUB Single/Ligature、GPOS Single/Pair、liga/kern/clig)",
       "text fill/stroke",
-      "scene rendering (basic/gradient/stroke/blit_clip_pattern/animation/font_shaping)",
+      "scene rendering (basic/gradient/stroke/blit_clip_pattern/animation/font_shaping/raden_player headless)",
       "host BMP output (top-down 32bpp BI_BITFIELDS、raw と同一 Image から生成)",
-      "browser Vector Playground (M1: 固定参照比較)"
+      "browser Vector Playground (M1: 固定参照比較 + M2/M3 custom scene: path 制御点/fill rule/matrix/clip/stroke/gradient/comp op/edge overlay)"
     ],
     "not_implemented": [
       "gpui native host (gpui@0.7.2 に画像 upload API なし、RADEN-0010 blocked)",
       "tiger scene (asset provenance 未確認)",
-      "raden_player scene (raw_player host と 1920x1080 scene 移植が別途必要)",
+      "raw_player display host (raden_player の scene/headless は実装済み)",
       "GPU 描画 / Cranelift JIT",
       "CFF/CFF2 フォント、縦書き、可変フォント、script 選択",
-      "Playground M2/M3 編集 UI"
+      "Playground M3 pattern filter / multi-stop gradient editor / coverage heatmap"
     ]
   },
   "verification": {
-    "conformance": "conformance/run_conformance.sh — 95 fixture oracle 比較 (pixel + shapes meta) + comparator selftest 13",
+    "conformance": "conformance/run_conformance.sh — 96 fixture oracle 比較 (pixel + shapes meta) + comparator selftest 13",
     "tests": "moon test --target native (75) / js (58)",
-    "examples": "examples/run_examples.sh — ready 6 本の raw hash + BMP decode、blocked 2 本の非 0 exit",
-    "browser": "examples/browser/e2e — unit 15/15 + chromium E2E 30/30",
+    "examples": "examples/run_examples.sh — ready 7 本の raw hash + BMP decode、blocked 1 本 (tiger) の非 0 exit",
+    "browser": "examples/browser/e2e — unit 15/15 + fixed E2E 30/30 + custom E2E 17/17",
     "bench": "conformance/run_bench.sh — raden.bench-report.v1 (hash gate 付き)",
     "gate": "scripts/run_checks.sh + scripts/check_gate.py (fail-closed)",
     "consumer": "scripts/run_consumer_test.sh (独立 module、native/js)",

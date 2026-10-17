@@ -675,7 +675,7 @@ async fn run_fixture(
       "scene" => {
         // 上流 example の scene 描画。w/h は fixture の画像寸法。
         // animation は t = frame / fps で決定する (実時間を使わない)。
-        let name = @scenes.SceneName::parse(json_str(cmd, "name"))
+        let scene_name = json_str(cmd, "name")
         let frame = match get(cmd, "frame") {
           Some(Number(n, ..)) => n.to_int64()
           Some(_) => raise @raden.InvalidInput("frame must be number")
@@ -690,13 +690,30 @@ async fn run_fixture(
           raise @raden.InvalidInput("fps must be > 0")
         }
         let t = @scenes.animation_t(frame, fps)
-        @scenes.render(
-          ctx,
-          name,
-          img.width().to_double(),
-          img.height().to_double(),
-          t,
-        )
+        let w = img.width().to_double()
+        let h = img.height().to_double()
+        if scene_name == "raden_player" {
+          let large = load_font(
+            fonts_dir, "SourceSans3-Regular.ttf", 0, 72.0, true, true, true,
+          )
+          let small = load_font(
+            fonts_dir, "SourceSans3-Regular.ttf", 0, 32.0, true, true, true,
+          )
+          @player.render(
+            ctx,
+            w,
+            h,
+            t,
+            large,
+            small,
+            frame,
+            fps.to_int(),
+            fps.to_double(),
+          )
+        } else {
+          let name = @scenes.SceneName::parse(scene_name)
+          @scenes.render(ctx, name, w, h, t)
+        }
       }
       other => raise @raden.InvalidInput("unknown command op: \{other}")
     }

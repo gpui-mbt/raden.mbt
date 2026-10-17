@@ -70,6 +70,7 @@
     "scene_basic_drawing",
     "scene_blit_clip_pattern",
     "scene_gradient_drawing",
+    "scene_raden_player_f0",
     "scene_stroke_drawing",
     "srcover_nested_alpha_7x3",
     "stroke_circle_16x16",

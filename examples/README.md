@@ -16,10 +16,12 @@
 | animation | ready | ready | ready | blocked | pass |
 | font_shaping | ready | ready | not_implemented | blocked | pass |
 | tiger | blocked (asset provenance) | blocked | blocked | blocked | not_verified |
-| raden_player | blocked (raw_player host) | blocked | n/a | blocked | not_verified |
+| raden_player | ready (adapter) | ready | n/a | blocked | pass (adapter) |
 
 `gpui` は RADEN-0010 が gpui@0.7.2 の画像 upload API 不在で blocked。
 `browser` は `examples/browser` の M1 (固定参照比較) のみ。
+`raden_player` は scene/headless adapter の parity で、上流の Helvetica と
+wall clock FPS は使わない (既知差分 #12/#13)。raw_player の表示 host は未実装。
 
 ## Native headless
 
@@ -37,6 +39,10 @@ $DEMO --example animation --frame 30 --fps 60 --output /tmp/demo
 
 # font_shaping は固定フォントを読み、conformance fixture と同じ scene を描く
 $DEMO --example font_shaping \
+  --font conformance/fonts/SourceSans3-Regular.ttf --output /tmp/demo
+
+# raden_player は animation の shape + テキストオーバーレイ
+$DEMO --example raden_player --fps 120 \
   --font conformance/fonts/SourceSans3-Regular.ttf --output /tmp/demo
 ```
 

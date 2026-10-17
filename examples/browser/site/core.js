@@ -4,7 +4,8 @@
 // 入力状態のハッシュ。参照画像・判定結果の対応付けに使う。
 // fnv-1a 32bit。同じ入力なら同じハッシュになる。
 export function inputHash(state) {
-  const s = `${state.preset}|${state.w}x${state.h}|f${state.frame}|fps${state.fps}`;
+  const extra = state.custom || (state.points ? state.points.join(",") : "");
+  const s = `${state.preset}|${state.w}x${state.h}|f${state.frame}|fps${state.fps}|${extra}`;
   let h = 0x811c9dc5;
   for (let i = 0; i < s.length; i++) {
     h ^= s.charCodeAt(i);
@@ -60,6 +61,10 @@ export function stateFromQuery(search, defaults) {
       if (Number.isFinite(v)) s[k] = v;
     }
   }
+  if (q.has("p")) {
+    const pts = q.get("p").split(",").map((v) => Number(v));
+    if (pts.length >= 6 && pts.length % 2 === 0 && pts.every((v) => Number.isFinite(v))) s.points = pts;
+  }
   return s;
 }
 
@@ -72,6 +77,7 @@ export function stateToQuery(s) {
   q.set("frame", String(s.frame));
   q.set("fps", String(s.fps));
   if (s.zoom !== undefined) q.set("zoom", String(s.zoom));
+  if (s.points !== undefined) q.set("p", s.points.join(","));
   return `?${q.toString()}`;
 }
 

@@ -1,0 +1,15 @@
+{
+  "schema": "raden.fixture.v1",
+  "fixture_id": "scene_raden_player_f0",
+  "width": 1920,
+  "height": 1080,
+  "pixel_format": "prgb32",
+  "commands": [
+    {
+      "op": "scene",
+      "name": "raden_player",
+      "frame": 0,
+      "fps": 120
+    }
+  ]
+}

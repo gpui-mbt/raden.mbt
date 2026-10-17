@@ -18,6 +18,7 @@ mutation スコアを目標にはせず、検出手段の網羅性を記録す�
 | blocked example の暗黙成功 | examples/run_examples.sh が非 0 exit を要求 | fail-closed |
 | CI job missing/fail/cancelled/skip | scripts/test_gate.sh (8 ケース) | 全件拒否確認済み |
 | browser の参照欠落/旧 SHA/寸法違い/順序逆転 | chromium E2E の故障注入 | 30/30 pass |
+| custom scene の編集 (fill rule/matrix/clip/stroke/gradient/comp op/overlay/drag) | `e2e/custom.mjs` | 17/17 pass |
 | 配布物混入 (絶対パス/秘密情報/生成物) | release/inspect_artifact.sh | 実行済み |
 | bench の画素差 | run_bench.sh の hash_match gate | fail-closed |
 

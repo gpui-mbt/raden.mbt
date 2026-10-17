@@ -3,9 +3,12 @@
 //! `raw_player` に依存する部分 (イベント処理・テクスチャ・debug_text) は
 //! ホスト層であり、ここでは画像生成に関わる scene のみを扱う。
 
+use std::path::Path as FsPath;
+
 use raden::{
-    Circle, CompOp, Context, ExtendMode, Gradient, Image, Line, Matrix2D, Path, Pattern,
-    PatternFilter, PixelFormat, Rect, Rgba32, StrokeCap, StrokeJoin, premultiply_rgba,
+    Circle, CompOp, Context, ExtendMode, Font, FontData, FontFace, Gradient, Image, Line,
+    Matrix2D, Path, Pattern, PatternFilter, PixelFormat, Rect, Rgba32, StrokeCap, StrokeJoin,
+    premultiply_rgba,
 };
 
 /// scene 名から描画関数へ dispatch する。
@@ -17,6 +20,7 @@ pub fn render_scene(
     h: f64,
     frame: u64,
     fps: u32,
+    fonts_dir: &FsPath,
 ) -> Result<(), String> {
     match name {
         "basic_drawing" => basic_drawing(ctx, w, h),
@@ -29,6 +33,13 @@ pub fn render_scene(
             }
             let t = frame as f64 / fps as f64;
             animation_frame(ctx, t, w, h)
+        }
+        "raden_player" => {
+            if fps == 0 {
+                return Err("fps must be > 0".to_string());
+            }
+            let t = frame as f64 / fps as f64;
+            raden_player(ctx, t, w, h, frame, fps, fonts_dir)?;
         }
         other => return Err(format!("unknown scene: {other}")),
     }
@@ -523,4 +534,60 @@ fn animation_frame(ctx: &mut Context, t: f64, w: f64, h: f64) {
         ctx.set_fill_style(Rgba32::new(sr, sg, sb, 180));
         ctx.fill_circle(&Circle::new(sx, sy, shape_radius));
     }
+}
+
+// =============================================================================
+// raden_player.rs generate_frame (shape + font overlay)
+// =============================================================================
+
+/// raden_player の scene。表示 host (raw_player) は対象外。
+/// 上流は Helvetica と wall clock FPS を使うが、決定性のため
+/// SourceSans3 と target FPS 固定の actual FPS を使う (既知差分 #12/#13)。
+fn raden_player(
+    ctx: &mut Context,
+    t: f64,
+    w: f64,
+    h: f64,
+    frame_number: u64,
+    target_fps: u32,
+    fonts_dir: &FsPath,
+) -> Result<(), String> {
+    animation_frame(ctx, t, w, h);
+
+    let font_path = fonts_dir.join("SourceSans3-Regular.ttf");
+    let font_data = FontData::from_file(&font_path)
+        .map_err(|e| format!("load player font {}: {e}", font_path.display()))?;
+    let face = FontFace::from_data(&font_data, 0)
+        .map_err(|e| format!("parse player font: {e:?}"))?;
+    let font_large = Font::from_face(&face, 72.0);
+    let font_small = Font::from_face(&face, 32.0);
+
+    let elapsed_ms = (t * 1000.0) as u64;
+    let time_text = format!("{elapsed_ms:08} ms");
+    let text_x = w * 0.5 - 200.0;
+    let text_y = h * 0.85;
+
+    // 影
+    ctx.set_fill_style(Rgba32::new(0, 0, 0, 200));
+    ctx.fill_text(text_x + 3.0, text_y + 3.0, &font_large, &time_text);
+    // 本体
+    ctx.set_fill_style(Rgba32::new(255, 255, 255, 255));
+    ctx.fill_text(text_x, text_y, &font_large, &time_text);
+
+    // 情報表示
+    ctx.set_fill_style(Rgba32::new(255, 255, 255, 200));
+    let info_text = format!("{}x{} | {} FPS | RAW BGRA", w as u32, h as u32, target_fps);
+    ctx.fill_text(30.0, 50.0, &font_small, &info_text);
+
+    // フレーム番号
+    ctx.set_fill_style(Rgba32::new(200, 200, 200, 255));
+    let frame_text = format!("Frame: {frame_number:06}");
+    ctx.fill_text(30.0, 95.0, &font_small, &frame_text);
+
+    // 実際の FPS (緑)。headless では target 固定。
+    ctx.set_fill_style(Rgba32::new(150, 255, 150, 255));
+    let actual_fps = target_fps as f64;
+    let fps_text = format!("FPS: {actual_fps:.1}");
+    ctx.fill_text(30.0, 140.0, &font_small, &fps_text);
+    Ok(())
 }

@@ -76,7 +76,7 @@ print(f"runtime deps ok: {sorted(deps)}")
 PY
 
 # 6. 公開パッケージの .mbti
-for d in . font internal/pixel internal/raster examples/scenes; do
+for d in . font internal/pixel internal/raster examples/scenes examples/player; do
   [ -f "$d/pkg.generated.mbti" ] || fail "$d/pkg.generated.mbti なし (moon info 未実行)"
 done
 

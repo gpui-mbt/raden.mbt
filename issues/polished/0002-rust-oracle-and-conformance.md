@@ -102,7 +102,7 @@ Depends-on: RADEN-0001
 
 - 検証状態: 完了 (2026-10-17 実施)。上流 SHA `afb752e` を git rev 固定で
   rustc 1.98.1 により release ビルドし、`raden-oracle selftest` 13 control
-  全件拒否、`conformance/run_conformance.sh` で 95/95 fixture pass を実測。
+  全件拒否、`conformance/run_conformance.sh` で 96/96 fixture pass を実測。
   reference/candidate は gitignore の生成物で、run_conformance.sh が
   oracle 不在時に再生成する。比較器は色/1画素/alpha/全黒/サイズ/旧 input hash/
   非ゼロ exit/欠落 raw/欠落 oracle/改ざん meta/空集合/欠落 fixture を拒否。

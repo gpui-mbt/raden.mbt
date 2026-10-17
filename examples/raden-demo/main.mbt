@@ -19,6 +19,7 @@
 enum ExampleStatus {
   Ready(@scenes.SceneName)
   ReadyFontShaping
+  ReadyRadenPlayer
   Blocked(reason~ : String, unblock~ : String)
 }
 
@@ -34,18 +35,13 @@ fn example_status(name : String) -> ExampleStatus? {
     // font_shaping は scene 型ではなく host 側で font を読み込み、
     // conformance/fixtures/font_shaping_1400x500.json と同じ描画を行う。
     "font_shaping" => Some(ReadyFontShaping)
+    // raden_player は shape を animation と共有し、host 側で font を読む。
+    "raden_player" => Some(ReadyRadenPlayer)
     "tiger" =>
       Some(
         Blocked(
           reason="tiger_data は AmanithVG (OpenVG) 由来で Blend2D 経由。再配布条件の確認が取れるまでデータを同梱しない",
           unblock="出典台帳と再配布条件の確認後にデータ変換を行う (issues/polished/0008 参照)",
-        ),
-      )
-    "raden_player" =>
-      Some(
-        Blocked(
-          reason="raw_player host と 1920x1080 scene の移植が必要。本 CLI は scene のみを対象とする",
-          unblock="raw_player 互換 host と scene 移植を別 Issue で実施する",
         ),
       )
     _ => None
@@ -57,8 +53,20 @@ fn example_status(name : String) -> ExampleStatus? {
 fn canonical_size(name : String) -> (Int32, Int32) {
   if name == "font_shaping" {
     (1400, 500)
+  } else if name == "raden_player" {
+    (1920, 1080)
   } else {
     (1280, 720)
+  }
+}
+
+///|
+/// 上流 example の既定 fps。raden_player は 120fps 前提。
+fn canonical_fps(name : String) -> Int64 {
+  if name == "raden_player" {
+    120L
+  } else {
+    60L
   }
 }
 
@@ -221,6 +229,67 @@ async fn render_font_shaping(
 }
 
 ///|
+/// 上流 raden_player の shape + テキストオーバーレイ。
+/// フォントは決定性のため SourceSans3 を使い、actual FPS は target FPS に固定する
+/// (上流は Helvetica と wall clock。既知差分 #12/#13)。
+async fn render_raden_player(
+  width : Int32,
+  height : Int32,
+  frame : Int64,
+  fps : Int64,
+  font_path : String,
+) -> @raden.Image {
+  let font_data = @fs.read_file(font_path, sync_timestamp=false) catch {
+    _ => {
+      println("error: cannot read font: \{font_path}")
+      println("remediation: pass --font <path> to a TrueType font")
+      abort("font read failed")
+    }
+  }
+  let face = @font.FontFace::from_data(
+    @font.FontData::from_bytes(font_data.binary()),
+    0,
+  ) catch {
+    @font.FontError::InvalidData(msg) => {
+      println("error: invalid font \{font_path}: \{msg}")
+      abort("font parse failed")
+    }
+    @font.FontError::Io(msg) => {
+      println("error: font I/O \{font_path}: \{msg}")
+      abort("font parse failed")
+    }
+  }
+  let img = @raden.Image::new(width, height, @raden.Prgb32) catch {
+    e => {
+      println("error: cannot allocate \{width}x\{height}: \{e.to_string()}")
+      abort("image allocation failed")
+    }
+  }
+  let ctx = @raden.Context::new(img, @raden.PipelineRuntime::new())
+  let t = @scenes.animation_t(frame, fps)
+  let font_large = @font.Font::from_face(face, 72.0)
+  let font_small = @font.Font::from_face(face, 32.0)
+  @player.render(
+    ctx,
+    width.to_double(),
+    height.to_double(),
+    t,
+    font_large,
+    font_small,
+    frame,
+    fps.to_int(),
+    fps.to_double(),
+  ) catch {
+    e => {
+      println("error: raden_player scene failed: \{e.to_string()}")
+      abort("raden_player scene failed")
+    }
+  }
+  ctx.end()
+  img
+}
+
+///|
 async fn run_demo(
   example : String,
   out_dir : String,
@@ -234,7 +303,7 @@ async fn run_demo(
   guard example_status(example) is Some(status) else {
     println("error: unknown example: \{example}")
     println(
-      "hint: available examples are basic_drawing, gradient_drawing, stroke_drawing, blit_clip_pattern_paths, animation, font_shaping (ready) and tiger, raden_player (blocked)",
+      "hint: available examples are basic_drawing, gradient_drawing, stroke_drawing, blit_clip_pattern_paths, animation, font_shaping, raden_player (ready) and tiger (blocked)",
     )
     abort("unknown example")
   }
@@ -273,6 +342,12 @@ async fn run_demo(
         example, out_dir, img, width, height, frame, fps, t, font_path, text,
       )
     }
+    ReadyRadenPlayer => {
+      let img = render_raden_player(width, height, frame, fps, font_path)
+      write_outputs(
+        example, out_dir, img, width, height, frame, fps, t, font_path, "",
+      )
+    }
     Blocked(reason~, unblock~) => {
       println("error: example \{example} is blocked")
       println("reason: \{reason}")
@@ -296,6 +371,7 @@ async fn main {
   let mut height = 0
   let mut frame = 0L
   let mut fps = 60L
+  let mut fps_set = false
   let mut font_path = "conformance/fonts/SourceSans3-Regular.ttf"
   let mut text = "ffi AV fl"
   let mut i = 1
@@ -331,6 +407,7 @@ async fn main {
         fps = @string.parse_int64(args[i + 1]) catch {
           _ => abort("invalid --fps value: \{args[i + 1]}")
         }
+        fps_set = true
         i = i + 2
       }
       "--font" => {
@@ -352,29 +429,45 @@ async fn main {
     println(usage)
     abort("--example is required")
   }
-  // サイズ未指定なら canonical サイズを使う。
-  if width == 0 || height == 0 {
-    match example_status(example) {
-      Some(Ready(_)) => {
-        let (w, h) = canonical_size(example)
-        if width == 0 {
-          width = w
-        }
-        if height == 0 {
-          height = h
-        }
+  // サイズ/fps 未指定なら canonical 値を使う。
+  match example_status(example) {
+    Some(Ready(_)) => {
+      let (w, h) = canonical_size(example)
+      if width == 0 {
+        width = w
       }
-      Some(ReadyFontShaping) => {
-        let (w, h) = canonical_size(example)
-        if width == 0 {
-          width = w
-        }
-        if height == 0 {
-          height = h
-        }
+      if height == 0 {
+        height = h
       }
-      _ => ()
+      if !fps_set {
+        fps = canonical_fps(example)
+      }
     }
+    Some(ReadyFontShaping) => {
+      let (w, h) = canonical_size(example)
+      if width == 0 {
+        width = w
+      }
+      if height == 0 {
+        height = h
+      }
+      if !fps_set {
+        fps = canonical_fps(example)
+      }
+    }
+    Some(ReadyRadenPlayer) => {
+      let (w, h) = canonical_size(example)
+      if width == 0 {
+        width = w
+      }
+      if height == 0 {
+        height = h
+      }
+      if !fps_set {
+        fps = canonical_fps(example)
+      }
+    }
+    _ => ()
   }
   run_demo(example, out_dir, width, height, frame, fps, font_path, text)
 }

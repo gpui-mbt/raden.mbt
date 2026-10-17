@@ -118,7 +118,7 @@ scripts/             # 再現可能な実行入口
 - 検証状態: 完了 (2026-10-17 実施)。moon 0.1.20261012 / moonc v0.10.15 /
   node v24.22.0 / rustc 1.98.1。runtime 依存は `moonbitlang/async@0.22.4`
   (registry 実在版。0.22.5 は存在せず解決不能だったため修正)。
-  native 75 tests / js 58 tests、consumer native+js、95 fixture conformance
+  native 75 tests / js 58 tests、consumer native+js、96 fixture conformance
   を実行済み。`docs/api-compatibility.md` と `upstream.lock.json` を実測値へ更新。
 - 本Issueは [issues/README.md](../README.md) のM0（基盤）に含まれ、RADEN-0002以降の前提になる。
 - 2026-10-16: polish-issue で実装可能な形式へ整備。issues/open から移動。内容は計画作成時のもので、実装・検証は未実行

@@ -41,7 +41,7 @@
     "native": {
       "status": "verified",
       "os_arch": "macos arm64",
-      "note": "moon check/test native、conformance 95/95、examples 全件、BMP 検証を実行済み"
+      "note": "moon check/test native、conformance 96/96、examples 全件、BMP 検証を実行済み"
     },
     "js": {
       "status": "verified",

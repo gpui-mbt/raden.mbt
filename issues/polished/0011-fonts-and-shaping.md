@@ -101,7 +101,7 @@ parse/metrics、simple outline、compound、GSUB、GPOS、Context/exampleの順�
   11 (js) test。conformance に `text` op を追加し、glyph id /
   cluster (UTF-8 byte index) / advance / offset を `shapes` meta で
   厳密比較する (text_* 14 fixture + font_shaping_1400x500 の
-  上流 example 再現、計 95/95 pass)。`raden-demo --example font_shaping`
+  上流 example 再現、計 96/96 pass)。`raden-demo --example font_shaping`
   も同じ fixture と同じ raw hash (9750c84b…) を出力し、BMP も検証済み。
   fill_text/stroke_text はパッケージ制約により
   `font::fill_text(ctx, ...)` 自由関数 (既知差分 #11)。

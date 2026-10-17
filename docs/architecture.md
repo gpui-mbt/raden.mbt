@@ -42,6 +42,7 @@ internal/raster/          # AnalyticRasterizer (エッジ→カバレッジ)
 # 実行入口
 conformance/moonbit-candidate/ # fixture → .raw/.meta.json を生成する native 専用 cmd
 examples/scenes/          # 上流 example scene の host 非依存移植
+examples/player/          # raden_player の shape + font オーバーレイ
 examples/raden-demo/      # ヘッドレス CLI (raw + bmp + meta 出力)。
                           # bmp.mbt は host 層の BMP writer
 examples/browser/         # Vector Playground。ffi.mbt が JS export 層、

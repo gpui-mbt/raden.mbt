@@ -2,6 +2,8 @@ import {
   "gpui-mbt/raden",
   "gpui-mbt/raden/examples/scenes",
   "gpui-mbt/raden/internal/sha256",
+  "moonbitlang/core/json",
+  "moonbitlang/core/math",
 }
 
 supported_targets = "+js"
@@ -11,6 +13,7 @@ options(
     "js": {
       "exports": [
         "render_scene_rgba8",
+        "render_custom_rgba8",
         "error_message",
         "sha256_hex",
         "candidate_info",

@@ -23,8 +23,16 @@
   `examples/run_examples.sh` が BMP を decode して raw と照合する。
 - `font_shaping` example を ready 化 (`raden-demo --font/--text`)。
   conformance fixture と同じ raw hash を出力。
+- `raden_player` の scene/headless を実装 (`examples/player`、
+  `raden-demo --example raden_player --fps 120`)。shape は animation と共通、
+  テキストは vendored SourceSans3、actual FPS は target 固定。
+  raw_player 表示 host と上流 Helvetica/wall-clock との差は既知差分 #12/#13。
 - `examples/manifest.json` に core/native_headless/browser/gpui/
   pixel_parity の host 別 status を追加。
+- Vector Playground M2/M3 custom scene (`examples/browser/custom.mbt`):
+  Path 制御点 drag、fill rule、matrix、clip、stroke (width/cap/join/dash)、
+  linear gradient、comp op、edge overlay、URL query 復元。
+  `render_custom_rgba8` を JS export し、`e2e/custom.mjs` 17 項目で検証。
 
 ### Fixed
 

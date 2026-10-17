@@ -116,11 +116,11 @@ Depends-on: RADEN-0002, RADEN-0008
   - `consumer/` + `run_consumer_test.sh`: 独立 module が
     moon work 経由で公開 API のみ使用し native/js 両方で描画成功。
   - `release/manifest.json` + `inspect_artifact.sh`: 宣言範囲と
-    artifact 検査 (205 files、混入/秘密情報なし、runtime dep は async 0.22.4 のみ)。
-  - `examples/run_examples.sh`: ready 6 本の raw hash + BMP decode、
-    blocked 2 本の非 0 exit を検証。
-  - browser E2E: `node unit.mjs` 15/15 + chromium `check.mjs` 30/30。
-    optional job として実行し、失敗時は gate fail。
+    artifact 検査 (212 files、混入/秘密情報なし、runtime dep は async 0.22.4 のみ)。
+  - `examples/run_examples.sh`: ready 7 本の raw hash + BMP decode、
+    blocked 1 本 (tiger) の非 0 exit を検証。
+  - browser E2E: `node unit.mjs` 15/15 + 固定 preset `check.mjs` 30/30 +
+    custom `custom.mjs` 17/17。optional job として実行し、失敗時は gate fail。
   - `docs/mutation-and-negative-controls.md`: 負の対照一覧と
     mutation survivor の分類方針。
 - 本Issueは [issues/README.md](../README.md) のM5（実用化）に含まれる。performance予算はbaseline計測後に固定する。

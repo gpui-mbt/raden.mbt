@@ -1,0 +1,18 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "gpui-mbt/raden/examples/player"
+
+import {
+  "gpui-mbt/raden",
+  "gpui-mbt/raden/font",
+}
+
+// Values
+pub fn render(@raden.Context, Double, Double, Double, @font.Font, @font.Font, Int64, Int, Double) -> Unit raise @raden.RadenError
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

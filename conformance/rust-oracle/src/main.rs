@@ -797,6 +797,7 @@ fn run_fixture(fixture: &Fixture, fonts_dir: &FsPath) -> Result<(Image, Vec<Shap
                 fixture.height as f64,
                 *frame,
                 *fps,
+                fonts_dir,
             )?,
         }
     }

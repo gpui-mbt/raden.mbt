@@ -86,8 +86,10 @@ for entry in manifest["examples"]:
             continue
         w, h = entry["canonical_size"]
         args = [demo, "--example", name, "--output", work, "--headless"]
-        if name == "font_shaping":
+        if name in ("font_shaping", "raden_player"):
             args += ["--font", font]
+        if "fps" in entry:
+            args += ["--fps", str(entry["fps"])]
         r = run(args)
         if r.returncode != 0:
             fails.append((name, f"exit={r.returncode}: {r.stderr.strip()}"))

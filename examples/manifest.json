@@ -1,7 +1,7 @@
 {
   "schema": "raden.examples.v1",
   "upstream_sha": "afb752e17a69fef8af981251b68de22a7597ff01",
-  "notes": "status: ready = scene を Native/JS headless で再現可能 (oracle raw byte 一致 + BMP 検証)。blocked = 依存未実装または出典未確認で、実行要求は非 0 exit。raw_sha256 は canonical RGBA8 (oracle 基準)。host 別の状態は core / native_headless / browser / gpui / pixel_parity で個別に持つ。",
+  "notes": "status: ready = scene を Native/JS headless で再現可能 (oracle raw byte 一致 + BMP 検証)。blocked = 依存未実装または出典未確認で、実行要求は非 0 exit。raw_sha256 は canonical RGBA8 (oracle 基準)。host 別の状態は core / native_headless / browser / gpui / pixel_parity で個別に持つ。raden_player は scene adapter の parity であり upstream example そのものの一致は別欄。",
   "examples": [
     {
       "name": "basic_drawing",
@@ -13,9 +13,14 @@
       "pixel_parity": "pass",
       "bmp": "verified",
       "upstream": "examples/basic_drawing.rs",
-      "canonical_size": [1280, 720],
+      "canonical_size": [
+        1280,
+        720
+      ],
       "raw_sha256": "c3b545fd6edc87b21a5761e8b0a9a9ceda77be9aa21915607fad17619694ebe4",
-      "depends_on": ["RADEN-0003"]
+      "depends_on": [
+        "RADEN-0003"
+      ]
     },
     {
       "name": "gradient_drawing",
@@ -27,9 +32,14 @@
       "pixel_parity": "pass",
       "bmp": "verified",
       "upstream": "examples/gradient_drawing.rs",
-      "canonical_size": [1280, 720],
+      "canonical_size": [
+        1280,
+        720
+      ],
       "raw_sha256": "61fd7aa9d49466ebcef192871e5688d5e0d278484fb755ffd10950a9cb79fab7",
-      "depends_on": ["RADEN-0007"]
+      "depends_on": [
+        "RADEN-0007"
+      ]
     },
     {
       "name": "stroke_drawing",
@@ -41,9 +51,14 @@
       "pixel_parity": "pass",
       "bmp": "verified",
       "upstream": "examples/stroke_drawing.rs",
-      "canonical_size": [1280, 720],
+      "canonical_size": [
+        1280,
+        720
+      ],
       "raw_sha256": "19c4eec073c2bdb198e37f874ceabc9c1ca509606b349302ffc7276be842de82",
-      "depends_on": ["RADEN-0006"]
+      "depends_on": [
+        "RADEN-0006"
+      ]
     },
     {
       "name": "blit_clip_pattern_paths",
@@ -55,9 +70,15 @@
       "pixel_parity": "pass",
       "bmp": "verified",
       "upstream": "examples/blit_clip_pattern_paths.rs",
-      "canonical_size": [1280, 720],
+      "canonical_size": [
+        1280,
+        720
+      ],
       "raw_sha256": "96afedf5b80a3493c80f78cc8dd7c4f4d05e1968773895b28471188094627f24",
-      "depends_on": ["RADEN-0004", "RADEN-0007"],
+      "depends_on": [
+        "RADEN-0004",
+        "RADEN-0007"
+      ],
       "notes": "smooth_quad_to / smooth_cubic_to / conic_to / arc_to の拡張パス命令を含む"
     },
     {
@@ -70,14 +91,19 @@
       "pixel_parity": "pass",
       "bmp": "verified",
       "upstream": "examples/animation.rs",
-      "canonical_size": [1280, 720],
+      "canonical_size": [
+        1280,
+        720
+      ],
       "time_base": "t = frame / fps (実時間不使用)",
       "raw_sha256": {
         "frame0_1280x720": "c8d67c2973499b766318e8599076787f84acec63a01535fc5dfe508f0306aa66",
         "frame30_1280x720": "e26390f92fa19a7a217e09ca9ef8e279b42e76ee0789449e3c8b717518116cc7",
         "frame90_640x360": "407d47aa55b532e753eb4b1e1cc55235ade71342ae2e5b37bb9c51dc02baf20c"
       },
-      "depends_on": ["RADEN-0005"],
+      "depends_on": [
+        "RADEN-0005"
+      ],
       "notes": "上流の --duration ベンチモードは raw-player 依存。ここでは固定 frame で静止画比較する"
     },
     {
@@ -90,9 +116,14 @@
       "pixel_parity": "pass",
       "bmp": "verified",
       "upstream": "examples/font_shaping.rs",
-      "canonical_size": [1400, 500],
+      "canonical_size": [
+        1400,
+        500
+      ],
       "raw_sha256": "9750c84bd9c99b3720aee5c7dd120eec414cf988549177f1d8828ad2b7337d3b",
-      "depends_on": ["RADEN-0011"],
+      "depends_on": [
+        "RADEN-0011"
+      ],
       "notes": "font::fill_text 経由で conformance/fixtures/font_shaping_1400x500.json と同じ命令を描画。Browser preset には未追加"
     },
     {
@@ -106,20 +137,32 @@
       "upstream": "examples/tiger/",
       "reason": "tiger_data は AmanithVG (OpenVG) 由来で Blend2D bl_demo_tiger.h 経由。再配布条件 (zlib license 帰属) の確認が取れるまでデータを同梱しない",
       "unblock": "出典台帳と再配布条件の確認後にデータ変換 (変換 script + source hash + command/point 数を記録)",
-      "depends_on": ["RADEN-0006", "出典確認"]
+      "depends_on": [
+        "RADEN-0006",
+        "出典確認"
+      ]
     },
     {
       "name": "raden_player",
-      "status": "blocked",
-      "core": "blocked",
-      "native_headless": "blocked",
+      "status": "ready",
+      "core": "ready",
+      "native_headless": "ready",
       "browser": "not_applicable",
       "gpui": "blocked",
-      "pixel_parity": "not_verified",
+      "pixel_parity": "pass",
       "upstream": "examples/raden_player.rs",
-      "reason": "raw_player host と 1920x1080 scene の移植が必要。本リポジトリは scene のみを対象とし VideoPlayer 互換を名乗らない",
-      "unblock": "raw_player 互換 host と scene 移植を別 Issue で実施する",
-      "depends_on": ["raw_player host"]
+      "depends_on": [
+        "RADEN-0011"
+      ],
+      "upstream_example_parity": "not_verified",
+      "bmp": "verified",
+      "canonical_size": [
+        1920,
+        1080
+      ],
+      "fps": 120,
+      "raw_sha256": "60cf3dadacf00c2c669b4a83762ddd34d5947ff47c1963c1d5ab47aeafb7e559",
+      "notes": "shape は animation と共通。上流は Helvetica と wall clock FPS を使うが、決定性のため vendored SourceSans3 と target FPS 固定の actual FPS を使う (既知差分 #12/#13)。raw_player 表示 host は未実装のため upstream example の完全一致は主張しない"
     }
   ]
 }

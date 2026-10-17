@@ -95,10 +95,14 @@ Depends-on: RADEN-0002, RADEN-0008
 
 ## 注記
 
-- 検証状態: M1 完了 (2026-10-17 再検証)。chromium headless E2E 30/30、
-  node 純粋ロジック 15/15、native 75 / js 58 tests、conformance 95/95。
-  受け入れ条件のうち M1 の表示・操作・故障注入は検証済み。M2/M3 の編集 UI
-  (制御点・stroke・gradient 操作) は未実装で、release manifest でも
-  not_implemented と明示する。deploy は未実施 (ローカル検証のみ)。
+- 検証状態: M1 + M2/M3 custom scene 完了 (2026-10-17 再検証)。
+  chromium headless E2E 30/30 (固定 preset + 故障注入)、custom E2E 17/17
+  (fill rule / matrix / clip / stroke cap・dash / linear gradient / comp op /
+  edge overlay / 制御点 drag / URL 復元)、node 純粋ロジック 15/15、
+  native 75 / js 58 tests、conformance 96/96。
+  custom は参照なしを NO REFERENCE と表示し、編集点は overlay canvas に
+  描いて MoonBit の bytes には含めない。
+  M3 の pattern filter / multi-stop gradient editor / coverage heatmap は
+  未実装として release manifest に残す。deploy は未実施 (ローカル検証のみ)。
 - 本Issueは [issues/README.md](../README.md) のM1〜M3（最初のデモ〜Vector Playground）にまたがる。deployと公開は本Issueの実装完了後の別判断。
 - 2026-10-16: polish-issue で実装可能な形式へ整備。issues/open から移動。内容は計画作成時のもので、実装・検証は未実行

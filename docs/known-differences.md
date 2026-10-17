@@ -16,6 +16,8 @@
 | 9 | 非対応ソース形式・合成 op の blit | `assert!` で panic | `RadenError::InvalidInput` エラー | panic を再現しない | src/api/blit.rs | safety-tested |
 | 10 | パターン `fill_rect` で SrcCopy/SrcOver 以外 | `assert!` で panic | `RadenError::UnsupportedFeature` エラー | 同上 (空矩形は上流同様チェックを通過) | src/api/context.rs | safety-tested |
 | 11 | `Context::fill_text` / `stroke_text` | `Context` のメソッド | `font::fill_text(ctx, ...)` / `font::stroke_text(ctx, ...)` 自由関数 | MoonBit ではパッケージ外の型にメソッドを追加できない。描画経路 (全グリフを 1 Path に合成して fill/stroke) は同一 | src/api/context.rs | safety-tested |
+| 12 | `raden_player` の表示フォント | macOS の `/System/Library/Fonts/Helvetica.ttc` | vendored `SourceSans3-Regular.ttf` (72/32px) | OS フォント依存を避け、CI と全 target で同じ glyph を得る。adapter fixture の pixel parity のみ主張し upstream example parity は not_verified | examples/raden_player.rs | by design |
+| 13 | `raden_player` の actual FPS 表示 | wall clock から実測した FPS | target FPS 固定 (headless では 120.0) | 実時間に依存する golden を作らない。表示文字列は決定化される | examples/raden_player.rs | by design |
 
 `safety-tested` は「上流 panic ではなく安全なエラーになること」を
 wbtest / corrupt corpus で確認した状態であり、互換 pass ではない。

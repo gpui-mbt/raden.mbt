@@ -61,7 +61,7 @@ conformance/run_conformance.sh --regen-oracle  # oracle 参照も再生成
 比較器自身の負の対照は `raden-oracle selftest` (13 control) が毎回検査する。
 `text` fixture では描画ピクセルに加えて `shapes` メタデータ
 (glyph id / cluster (UTF-8 byte index) / advance / offset) を厳密比較する。
-95 fixture (pixel + shapes) が oracle と一致する。
+96 fixture (pixel + shapes) が oracle と一致する。
 詳細は `docs/architecture.md` と `issues/` を参照。
 
 ## 回帰ゲート / ベンチ / preview
@@ -101,11 +101,15 @@ moon build examples/raden-demo
 
 # font_shaping は固定フォントを読み、conformance fixture と同じ scene を描く
 ... --example font_shaping --font conformance/fonts/SourceSans3-Regular.ttf
+
+# raden_player は animation の shape にテキストを重ねる (表示 host は未実装)
+... --example raden_player --fps 120 \
+    --font conformance/fonts/SourceSans3-Regular.ttf
 ```
 
 `examples/manifest.json` が上流 8 本の status を管理する
-(ready 6 本 / blocked 2 本: tiger・raden_player。font_shaping は 2026-10-17 に
-conformance fixture と同一の raw hash で ready 化)。
+(ready 7 本 / blocked 1 本: tiger。raden_player は scene/headless adapter を
+実装し、上流の Helvetica・wall clock FPS との差は既知差分 #12/#13 として記録)。
 `examples/run_examples.sh` で ready 全件の raw hash と BMP decode 一致、
 blocked の非 0 終了を検証できる。
 
@@ -122,7 +126,11 @@ cd examples/browser/site && python3 -m http.server 8931
 ```
 
 E2E 検証: `examples/browser/e2e` (`node unit.mjs` で純粋ロジック、
-`node check.mjs` で headless Chromium による 30 項目の DOM/故障注入検証)。
+`node check.mjs` で固定 preset の DOM/故障注入 30 項目、
+`node custom.mjs` で custom scene の編集 17 項目)。
+`custom` preset では Path 制御点 drag、fill rule、matrix、clip、stroke
+(width/cap/join/dash)、linear gradient、comp op、edge overlay を操作できる。
+参照がない入力は `NO REFERENCE` と表示し、元 preset の画像を流用しない。
 詳細は `examples/browser/README.md`。
 
 ## 実装状況
@@ -138,11 +146,11 @@ E2E 検証: `examples/browser/e2e` (`node unit.mjs` で純粋ロジック、
 | グラデーション (Linear/Radial/Conic) | oracle 完全一致 |
 | パターン (Nearest/Bilinear、ExtendMode 全て) | oracle 完全一致 |
 | 拡張パス命令 (smooth/conic/arc_to) | oracle 完全一致 |
-| 上流 example scene 6 本 (font_shaping 含む) | oracle raw 一致 + BMP 検証 (manifest 管理) |
+| 上流 example scene 7 本 (font_shaping / raden_player adapter 含む) | oracle raw 一致 + BMP 検証 (manifest 管理) |
 | font (TrueType glyf + GSUB/GPOS 限定) | oracle shape/pixel 一致 |
 | fill_text / stroke_text | oracle 完全一致 (text_* fixture 15 件) |
 | host BMP output | oracle と同じ top-down 32bpp、raw と decode 一致 |
-| Vector Playground (JS host) | chromium E2E 30/30 + unit 15/15 (M1 相当) |
+| Vector Playground (JS host) | fixed E2E 30/30 + custom E2E 17/17 + unit 15/15 (M1 + M2/M3 custom) |
 
 未実装の機能は黙った no-op にはせず `RadenError::UnsupportedFeature`
 として失敗する (see `docs/known-differences.md`)。

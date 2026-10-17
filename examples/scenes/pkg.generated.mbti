@@ -7,6 +7,8 @@ import {
 }
 
 // Values
+pub fn animation_frame(@raden.Context, Double, Double, Double) -> Unit raise @raden.RadenError
+
 pub fn animation_t(Int64, Int64) -> Double
 
 pub fn canonical_rgba8(@raden.Image) -> Bytes
