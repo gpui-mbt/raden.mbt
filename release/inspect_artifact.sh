@@ -27,14 +27,19 @@ collect_artifact() {
   find . -type f \
     -not -path './_build/*' -not -path './.git/*' -not -path './.mooncakes/*' \
     -not -path './node_modules/*' -not -path '*/node_modules/*' \
+    -not -path './.cargo-home/*' -not -path './.rustup/*' -not -path './.npm-cache/*' \
     -not -path './conformance/rust-oracle/target/*' \
     -not -path './conformance/reference/*' -not -path './conformance/candidate/*' \
     -not -path './ci/*' -not -path './consumer/moon.work' \
+    -not -path './examples/browser/site/raden-browser.js' \
+    -not -path './examples/browser/site/manifest.json' \
+    -not -path './examples/browser/site/reference/*' \
     -not -name '*.raw' -not -name '*.log'
 }
 
 FILES=$(collect_artifact | grep -v -e '^./_build' -e '/_build/' -e '/target/' \
-  -e 'node_modules' -e '\.mooncakes' -e 'conformance/reference/' \
+  -e 'node_modules' -e '\.mooncakes' -e '\.cargo-home' -e '\.rustup' \
+  -e '\.npm-cache' -e 'conformance/reference/' \
   -e 'conformance/candidate/' -e 'conformance/bench/.*\.json' -e 'ci/' || true)
 
 echo "== artifact file count: $(echo "$FILES" | wc -l) =="

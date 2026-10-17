@@ -8,9 +8,6 @@ on:
 # 最後の gate job が scripts/check_gate.py で fail-closed に集約する。
 # required job が skip/cancel/missing でも gate は通さない。
 
-env:
-  MOON_HOME: ${{ github.workspace }}/.moon-toolchain
-
 jobs:
   setup-check:
     runs-on: ubuntu-latest
@@ -79,7 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: install moon + node
+      - name: install moon
         run: |
           curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
           echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
@@ -131,11 +128,150 @@ jobs:
         with:
           name: job-conformance
           path: ci/jobs/conformance.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: conformance-reference
+          path: conformance/reference/
+          if-no-files-found: ignore
+
+  examples:
+    needs: setup-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install moon
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: build demo and verify examples
+        id: run
+        run: |
+          moon build examples/raden-demo --target native
+          bash examples/run_examples.sh
+      - name: record job result
+        if: always()
+        run: |
+          mkdir -p ci/jobs
+          s=pass; [ "${{ steps.run.outcome }}" = "success" ] || s=fail
+          printf '{"name":"examples","required":true,"status":"%s","duration_ms":0,"command":"moon build examples/raden-demo && examples/run_examples.sh","note":""}\n' "$s" > ci/jobs/examples.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: job-examples
+          path: ci/jobs/examples.json
+
+  consumer:
+    needs: setup-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install moon
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: run consumer test
+        id: run
+        run: bash scripts/run_consumer_test.sh
+      - name: record job result
+        if: always()
+        run: |
+          mkdir -p ci/jobs
+          s=pass; [ "${{ steps.run.outcome }}" = "success" ] || s=fail
+          printf '{"name":"consumer","required":true,"status":"%s","duration_ms":0,"command":"bash scripts/run_consumer_test.sh","note":""}\n' "$s" > ci/jobs/consumer.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: job-consumer
+          path: ci/jobs/consumer.json
+
+  artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: inspect artifact
+        id: run
+        run: bash release/inspect_artifact.sh
+      - name: record job result
+        if: always()
+        run: |
+          mkdir -p ci/jobs
+          s=pass; [ "${{ steps.run.outcome }}" = "success" ] || s=fail
+          printf '{"name":"artifact","required":true,"status":"%s","duration_ms":0,"command":"bash release/inspect_artifact.sh","note":""}\n' "$s" > ci/jobs/artifact.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: job-artifact
+          path: ci/jobs/artifact.json
+
+  gate-fault-injection:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: run gate fault injection
+        id: run
+        run: bash scripts/test_gate.sh
+      - name: record job result
+        if: always()
+        run: |
+          mkdir -p ci/jobs
+          s=pass; [ "${{ steps.run.outcome }}" = "success" ] || s=fail
+          printf '{"name":"gate_fault_injection","required":true,"status":"%s","duration_ms":0,"command":"bash scripts/test_gate.sh","note":""}\n' "$s" > ci/jobs/gate_fault_injection.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: job-gate-fault-injection
+          path: ci/jobs/gate_fault_injection.json
+
+  browser-e2e:
+    needs: [setup-check, conformance]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install moon
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v4
+        with:
+          name: conformance-reference
+          path: conformance/reference
+      - name: install playwright
+        run: |
+          cd examples/browser/e2e
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: run browser E2E
+        id: run
+        run: bash scripts/run_browser_e2e.sh
+      - name: record job result
+        if: always()
+        run: |
+          mkdir -p ci/jobs
+          s=pass; [ "${{ steps.run.outcome }}" = "success" ] || s=fail
+          printf '{"name":"browser_e2e","required":false,"status":"%s","duration_ms":0,"command":"bash scripts/run_browser_e2e.sh","note":"optional: Playwright chromium"}\n' "$s" > ci/jobs/browser_e2e.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: job-browser-e2e
+          path: ci/jobs/browser_e2e.json
 
   gate:
     # required job の全てが登録済みかを確認する。needs が cancelled/skipped
     # でも always() で集約を走らせ、欠落した job json は missing として拒否する。
-    needs: [fmt-check, moonbit-native, moonbit-js, conformance]
+    needs:
+      - fmt-check
+      - moonbit-native
+      - moonbit-js
+      - conformance
+      - examples
+      - consumer
+      - artifact
+      - gate-fault-injection
+      - browser-e2e
     if: always()
     runs-on: ubuntu-latest
     steps:

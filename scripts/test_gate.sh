@@ -14,7 +14,7 @@ trap 'rm -rf "$TMP"' EXIT
 
 mkjobs() {
   local dir="$1"; mkdir -p "$dir"
-  for j in moon_fmt_check moon_check_native moon_check_js moon_test_native moon_test_js conformance; do
+  for j in moon_fmt_check moon_check_native moon_check_js moon_test_native moon_test_js conformance examples consumer artifact gate_fault_injection; do
     printf '{"name":"%s","required":true,"status":"pass","duration_ms":1,"command":"x","note":""}\n' "$j" > "$dir/$j.json"
   done
 }

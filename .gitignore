@@ -23,3 +23,8 @@ consumer/_build/
 consumer/.mooncakes/
 conformance/candidate/
 conformance/report.json
+
+# ローカル sandbox 用の toolchain cache (workspace 内に置く場合)
+.cargo-home/
+.rustup/
+.npm-cache/

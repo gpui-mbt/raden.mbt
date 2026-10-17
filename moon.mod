@@ -15,5 +15,5 @@ preferred_target = "native"
 description = "MoonBit port of shiguredo/raden: CPU 2D vector graphics core"
 
 import {
-  "moonbitlang/async@0.22.5",
+  "moonbitlang/async@0.22.4",
 }

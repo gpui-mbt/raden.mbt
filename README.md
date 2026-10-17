@@ -15,8 +15,8 @@ FFI ラッパーではない。
 
 ## ターゲット
 
-- `native` (第一対象)
-- `js` (moon test は両ターゲットで実行される)
+- `native` (第一対象。macOS arm64 で検証済み、Linux x86_64 は CI のみ)
+- `js` (moon test は両ターゲットで実行される。node v24 で検証済み)
 
 ## 構成
 
@@ -25,18 +25,21 @@ FFI ラッパーではない。
 - `internal/pixel`: パックドピクセル演算 (premultiply / Porter-Duff / A8)
 - `internal/raster`: 解析的ラスタライザ (cell 蓄積 + sweep)
 - `internal/sha256`: conformance 成果物のハッシュ計算
+- `font/`: TrueType パース・glyph 輪郭・限定 GSUB/GPOS shaping
 - `examples/scenes`: 上流 example の scene 移植 (host 非依存・決定的)
-- `examples/raden-demo`: scene のヘッドレス CLI (raw + metadata 出力)
-- `examples/manifest.json`: 上流 8 example の status 台帳
+- `examples/raden-demo`: scene のヘッドレス CLI (raw + bmp + metadata 出力)
+- `examples/manifest.json`: 上流 8 example の status 台帳 (host 別 status 付き)
 - `conformance/`: Rust oracle、fixture、期待集合、比較レポート
 - `docs/`: アーキテクチャ・API 対応表・既知差分
 
 ## テスト
 
 ```sh
-moon test               # native
-moon test --target js   # js
+moon test               # native: 75 tests
+moon test --target js   # js: 58 tests
 ```
+
+依存は `moonbitlang/async@0.22.4` (fs/時刻のみ。pure core は不使用)。
 
 ## conformance
 
@@ -55,8 +58,10 @@ conformance/run_conformance.sh --regen-oracle  # oracle 参照も再生成
 - レポート: `conformance/report.json` (`gate: pass/fail`)
 
 比較は fail-closed: 欠落・重複・空集合・旧 SHA・hash 不一致は全て失敗。
+比較器自身の負の対照は `raden-oracle selftest` (13 control) が毎回検査する。
 `text` fixture では描画ピクセルに加えて `shapes` メタデータ
 (glyph id / cluster (UTF-8 byte index) / advance / offset) を厳密比較する。
+95 fixture (pixel + shapes) が oracle と一致する。
 詳細は `docs/architecture.md` と `issues/` を参照。
 
 ## 回帰ゲート / ベンチ / preview
@@ -81,23 +86,28 @@ release/inspect_artifact.sh         # 配布 artifact の検査
 
 上流 example の scene は `examples/scenes` に host 非依存で移植済み
 (描画定数・命令列は上流をそのまま転記、conformance/rust-oracle/src/scenes.rs
-と同一内容)。`raden-demo` CLI で raw pixel + metadata を出力できる:
+と同一内容)。`raden-demo` CLI で raw pixel + BMP + metadata を出力できる:
 
 ```sh
 moon build examples/raden-demo
 ./_build/native/debug/build/examples/raden-demo/raden-demo.exe \
     --example basic_drawing --output /tmp/demo --headless
 # => /tmp/demo/basic_drawing.raw (canonical RGBA8)
+# => /tmp/demo/basic_drawing.bmp (top-down 32bpp BI_BITFIELDS)
 # => /tmp/demo/basic_drawing.meta.json (sha256 等)
 
 # animation は明示的な frame/fps で時刻が決まる (実時間不使用)
 ... --example animation --frame 30 --fps 60
+
+# font_shaping は固定フォントを読み、conformance fixture と同じ scene を描く
+... --example font_shaping --font conformance/fonts/SourceSans3-Regular.ttf
 ```
 
 `examples/manifest.json` が上流 8 本の status を管理する
-(ready 5 本 / blocked 3 本: tiger・raden_player・font_shaping)。
-`examples/run_examples.sh` で全件の生成・ハッシュ照合・blocked の
-非 0 終了を検証できる。
+(ready 6 本 / blocked 2 本: tiger・raden_player。font_shaping は 2026-10-17 に
+conformance fixture と同一の raw hash で ready 化)。
+`examples/run_examples.sh` で ready 全件の raw hash と BMP decode 一致、
+blocked の非 0 終了を検証できる。
 
 ## browser (Vector Playground)
 
@@ -128,10 +138,11 @@ E2E 検証: `examples/browser/e2e` (`node unit.mjs` で純粋ロジック、
 | グラデーション (Linear/Radial/Conic) | oracle 完全一致 |
 | パターン (Nearest/Bilinear、ExtendMode 全て) | oracle 完全一致 |
 | 拡張パス命令 (smooth/conic/arc_to) | oracle 完全一致 |
-| 上流 example scene 5 本 | oracle raw 一致 (manifest 管理) |
+| 上流 example scene 6 本 (font_shaping 含む) | oracle raw 一致 + BMP 検証 (manifest 管理) |
 | font (TrueType glyf + GSUB/GPOS 限定) | oracle shape/pixel 一致 |
 | fill_text / stroke_text | oracle 完全一致 (text_* fixture 15 件) |
-| Vector Playground (JS host) | chromium E2E 30/30 (M1 相当) |
+| host BMP output | oracle と同じ top-down 32bpp、raw と decode 一致 |
+| Vector Playground (JS host) | chromium E2E 30/30 + unit 15/15 (M1 相当) |
 
 未実装の機能は黙った no-op にはせず `RadenError::UnsupportedFeature`
 として失敗する (see `docs/known-differences.md`)。

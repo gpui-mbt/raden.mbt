@@ -41,15 +41,38 @@ json.dump({
 PY
 }
 
+# ミリ秒時刻。BSD/macOS の date は %N を解釈しないため python3 を使う。
+now_ms() {
+  python3 -c 'import time; print(int(time.time() * 1000))'
+}
+
+# GNU timeout があれば使い、なければ gtimeout、どちらも無ければ timeout なし。
+TIMEOUT_BIN=""
+if command -v timeout >/dev/null 2>&1; then
+  TIMEOUT_BIN="timeout"
+elif command -v gtimeout >/dev/null 2>&1; then
+  TIMEOUT_BIN="gtimeout"
+fi
+
+# サンドボックス等で ~/.cargo に書けない環境向け: workspace に
+# .cargo-home があれば比較基盤の job で使う (CI では通常の CARGO_HOME)。
+if [ -z "${CARGO_HOME:-}" ] && [ -d "$ROOT/.cargo-home" ]; then
+  export CARGO_HOME="$ROOT/.cargo-home"
+fi
+
 run_job() {
   local name="$1" required="$2"; shift 2
   local log="$LOGS_DIR/$name.log"
   echo "== job: $name ==" | tee "$log"
   local t0 t1 rc status
-  t0=$(date +%s%3N)
-  timeout "${RADEN_JOB_TIMEOUT:-600}" "$@" >>"$log" 2>&1
+  t0=$(now_ms)
+  if [ -n "$TIMEOUT_BIN" ]; then
+    "$TIMEOUT_BIN" "${RADEN_JOB_TIMEOUT:-600}" "$@" >>"$log" 2>&1
+  else
+    "$@" >>"$log" 2>&1
+  fi
   rc=$?
-  t1=$(date +%s%3N)
+  t1=$(now_ms)
   case $rc in
     0) status=pass ;;
     124|137) status=cancelled ;;
@@ -77,6 +100,10 @@ run_job moon_check_js true moon check --target js
 run_job moon_test_native true moon test --target native
 run_job moon_test_js true moon test --target js
 run_job conformance true bash conformance/run_conformance.sh
+run_job examples true bash -c 'moon build examples/raden-demo --target native && bash examples/run_examples.sh'
+run_job consumer true bash scripts/run_consumer_test.sh
+run_job artifact true bash release/inspect_artifact.sh
+run_job gate_fault_injection true bash scripts/test_gate.sh
 
 # --- optional jobs ---
 BENCH_REASON=""

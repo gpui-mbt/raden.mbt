@@ -27,19 +27,31 @@ if [ "${1:-}" = "--regen-oracle" ]; then
   REGEN_ORACLE=1
 fi
 
+# サンドボックス等で ~/.cargo に書けない環境向けの opt-in 設定。
+if [ -n "${RADEN_CARGO_HOME:-}" ]; then
+  export CARGO_HOME="$RADEN_CARGO_HOME"
+fi
+
 # 1. oracle 参照出力の生成 (固定 SHA の Rust 実装が実際に上流 API を呼ぶ)。
-if [ "$REGEN_ORACLE" = "1" ] || [ ! -d "$REFERENCE" ]; then
-  echo "== generating oracle reference outputs =="
+if [ "$REGEN_ORACLE" = "1" ] || [ ! -d "$REFERENCE" ] || [ ! -x "$ORACLE_BIN" ]; then
+  echo "== building oracle (release) =="
   (cd conformance/rust-oracle && cargo build --release --locked)
+  echo "== generating oracle reference outputs =="
   "$ORACLE_BIN" generate --fixtures "$FIXTURES" --out "$REFERENCE" --fonts "conformance/fonts"
 fi
 
-# 2. oracle 自体の健全性 (負の対照) は cargo test/selftest 側で担保する。
-#    ここでは compare が fail-closed で動くことを前提に candidate を生成する。
+# 2. oracle の比較器自身が負の対照を拒否できることを毎回確認する。
+echo "== oracle comparator selftest =="
+"$ORACLE_BIN" selftest
+
+# 3. candidate を生成する。
 echo "== building moonbit candidate =="
 moon build conformance/moonbit-candidate --target native
 
 CANDIDATE_BIN="_build/native/debug/build/conformance/moonbit-candidate/moonbit-candidate.exe"
+if [ ! -x "$CANDIDATE_BIN" ]; then
+  CANDIDATE_BIN="_build/native/debug/build/conformance/moonbit-candidate/moonbit-candidate"
+fi
 export RADEN_CANDIDATE_TOOLCHAIN="$(moonc -v 2>&1 | head -1)"
 export RADEN_CANDIDATE_TARGET="native $(uname -m)-$(uname -s | tr '[:upper:]' '[:lower:]')"
 
@@ -47,7 +59,7 @@ echo "== running moonbit candidate =="
 rm -rf "$CANDIDATE"
 "$CANDIDATE_BIN" generate --fixtures "$FIXTURES" --out "$CANDIDATE" --fonts "conformance/fonts"
 
-# 3. 比較 (manifest の期待集合と実行結果集合を fail-closed で照合)。
+# 4. 比較 (manifest の期待集合と実行結果集合を fail-closed で照合)。
 echo "== comparing candidate vs oracle =="
 "$ORACLE_BIN" compare \
   --manifest "$EXPECTED" \

@@ -21,10 +21,10 @@
   },
   "toolchains": {
     "rust": {
-      "channel": "1.94.0",
-      "rustc": "rustc 1.94.0 (4a4ef493e 2026-03-02)",
+      "channel": "1.98.1",
+      "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
       "pin": "conformance/rust-oracle/rust-toolchain.toml",
-      "note": "rust-toolchain.toml の channel = \"1.94.0\" で解決。raden は rust-version 1.94 を要求するため stable (1.92) ではビルド不可"
+      "note": "rust-toolchain.toml の channel = \"1.98.1\" で解決。raden は rust-version 1.94 を要求し、1.98.1 は --locked ビルドと oracle 実行を満たす"
     },
     "moonbit": {
       "moon": "moon 0.1.20261012 (748b63c 2026-10-12)",
@@ -34,24 +34,28 @@
     },
     "node": {
       "version": "v24.22.0",
-      "note": "--target js のテスト実行に使用"
+      "note": "--target js のテスト実行と browser E2E に使用"
     }
   },
   "targets": {
     "native": {
-      "status": "implemented",
-      "os_arch": "linux x86_64",
-      "note": "moon --target native でコンパイル・テスト実行済み"
+      "status": "verified",
+      "os_arch": "macos arm64",
+      "note": "moon check/test native、conformance 95/95、examples 全件、BMP 検証を実行済み"
     },
     "js": {
-      "status": "implemented",
+      "status": "verified",
       "runtime": "node v24.22.0",
-      "note": "moon --target js でコンパイル・テスト実行済み"
+      "note": "moon check/test js (58 tests) と chromium browser E2E 30/30 を実行済み"
     },
     "wasm": { "status": "not_verified" },
     "wasm-gc": { "status": "not_verified" },
     "windows": { "status": "not_verified" },
-    "macos-apple-silicon": { "status": "not_verified" },
+    "linux-x86_64": {
+      "status": "not_verified",
+      "note": "CI (ubuntu-latest) のみ。ローカル実機では未実行"
+    },
+    "macos-apple-silicon": { "status": "verified" },
     "macos-intel": { "status": "out_of_scope" }
   },
   "assets": {
@@ -60,8 +64,11 @@
       "note": "上流 examples/tiger/tiger_data.rs の出典・再配布条件を確認するまで fixture を blocked として扱う"
     },
     "fonts": {
-      "status": "pending_provenance_check",
-      "note": "配布フォントの出典・再配布条件を確認するまで font fixture を blocked として扱う"
+      "status": "confirmed",
+      "path": "conformance/fonts/SourceSans3-Regular.ttf",
+      "license": "SIL OFL 1.1",
+      "sha256": "4644c81b86ec9caaa76b634889968ed3c4f4f52f054855933acc7c2b21e53b0f",
+      "note": "上流が pin する Source Sans 3 3.052R と同一ファイル。OFL に基づき検証用途で vendoring"
     }
   }
 }

@@ -109,6 +109,13 @@ Depends-on: RADEN-0002, RADEN-0003
 
 ## 注記
 
-- 検証状態: 未実行（実装計画）。
+- 検証状態: 完了 (2026-10-17 実施)。ready 6 本
+  (basic/gradient/stroke/blit_clip_pattern/animation/font_shaping) を
+  `examples/run_examples.sh` で oracle raw hash + BMP decode 一致まで検証。
+  blocked 2 本 (tiger: provenance 未確認、raden_player: raw_player host と
+  1920x1080 scene 移植が必要) は非 0 exit を確認。`examples/raden-demo/bmp.mbt`
+  が上流 `src/codec/bmp.rs` と同じ top-down 32bpp BI_BITFIELDS を出力し、
+  meta に bmp hash を記録する。manifest は core/native_headless/browser/gpui/
+  pixel_parity を個別 status で持つ。
 - 本Issueは [issues/README.md](../README.md) のM1〜M4にまたがる。M1（最初のデモ）の中核で、basic以外は後続Issueと同時に段階追加する。
 - 2026-10-16: polish-issue で実装可能な形式へ整備。issues/open から移動。内容は計画作成時のもので、実装・検証は未実行

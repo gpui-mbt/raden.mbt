@@ -38,6 +38,21 @@ pub fn canonical_rgba8(img : @raden.Image) -> Bytes {
 }
 
 ///|
+/// scene を新規 Image に描画して返す。
+/// canonical raw と host 側 BMP 出力の両方が同じ Image を共有できる。
+pub fn render_to_image(
+  name : SceneName,
+  w : Int32,
+  h : Int32,
+  t : Double,
+) -> @raden.Image raise @raden.RadenError {
+  let img = @raden.Image::new(w, h, @raden.Prgb32)
+  let ctx = @raden.Context::new(img, @raden.PipelineRuntime::new())
+  render(ctx, name, w.to_double(), h.to_double(), t)
+  img
+}
+
+///|
 /// scene を新規 Image に描画し、canonical バイト列を返す。
 /// 寸法が 0 以下なら `InvalidInput`。blocked scene は呼び出し側が
 /// manifest に基づいて判定する (この関数は描画可能な scene のみ扱う)。
@@ -47,8 +62,6 @@ pub fn render_to_rgba8(
   h : Int32,
   t : Double,
 ) -> Bytes raise @raden.RadenError {
-  let img = @raden.Image::new(w, h, @raden.Prgb32)
-  let ctx = @raden.Context::new(img, @raden.PipelineRuntime::new())
-  render(ctx, name, w.to_double(), h.to_double(), t)
+  let img = render_to_image(name, w, h, t)
   canonical_rgba8(img)
 }

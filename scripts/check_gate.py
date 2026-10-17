@@ -25,6 +25,10 @@ REQUIRED_JOBS = [
     "moon_test_native",
     "moon_test_js",
     "conformance",
+    "examples",
+    "consumer",
+    "artifact",
+    "gate_fault_injection",
 ]
 
 VALID_STATUSES = {"pass", "fail", "error", "skipped", "cancelled"}

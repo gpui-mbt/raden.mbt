@@ -20,7 +20,7 @@ publish/deploy は明示的な実行判断を経るため、本ファイルは�
 
 ## 依存・asset 台帳
 
-- runtime 依存: `moonbitlang/async@0.22.5` (fs/時刻のみ。pure core 未使用)
+- runtime 依存: `moonbitlang/async@0.22.4` (fs/時刻のみ。pure core 未使用)
 - `conformance/fonts/SourceSans3-Regular.ttf`: SIL OFL 1.1、
   sha256 は `upstream.lock.json` / fonts/README.md に記録。
   検証用途で同梱、runtime への埋め込みなし。

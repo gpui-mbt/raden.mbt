@@ -12,12 +12,12 @@
     }
   },
   "targets": {
-    "native": { "status": "verified", "os_arch": "linux x86_64" },
+    "native": { "status": "verified", "os_arch": "macos arm64" },
+    "linux-x86_64": { "status": "not_verified", "note": "CI (ubuntu-latest) のみ。ローカル実機検証は未実施" },
     "js": { "status": "verified", "runtime": "node v24" },
     "wasm": { "status": "not_verified" },
     "wasm-gc": { "status": "not_verified" },
     "windows": { "status": "not_verified" },
-    "macos-apple-silicon": { "status": "not_verified" },
     "macos-intel": { "status": "out_of_scope" }
   },
   "features": {
@@ -29,32 +29,36 @@
       "gradient (linear/radial/conic) / pattern / blit",
       "font (TrueType glyf、GSUB Single/Ligature、GPOS Single/Pair、liga/kern/clig)",
       "text fill/stroke",
-      "scene rendering (basic/gradient/stroke/blit_clip_pattern/animation)",
+      "scene rendering (basic/gradient/stroke/blit_clip_pattern/animation/font_shaping)",
+      "host BMP output (top-down 32bpp BI_BITFIELDS、raw と同一 Image から生成)",
       "browser Vector Playground (M1: 固定参照比較)"
     ],
     "not_implemented": [
       "gpui native host (gpui@0.7.2 に画像 upload API なし、RADEN-0010 blocked)",
       "tiger scene (asset provenance 未確認)",
+      "raden_player scene (raw_player host と 1920x1080 scene 移植が別途必要)",
       "GPU 描画 / Cranelift JIT",
       "CFF/CFF2 フォント、縦書き、可変フォント、script 選択",
       "Playground M2/M3 編集 UI"
     ]
   },
   "verification": {
-    "conformance": "conformance/run_conformance.sh — 95 fixture oracle 比較 (pixel + shapes meta)",
-    "tests": "moon test --target native / js",
+    "conformance": "conformance/run_conformance.sh — 95 fixture oracle 比較 (pixel + shapes meta) + comparator selftest 13",
+    "tests": "moon test --target native (75) / js (58)",
+    "examples": "examples/run_examples.sh — ready 6 本の raw hash + BMP decode、blocked 2 本の非 0 exit",
+    "browser": "examples/browser/e2e — unit 15/15 + chromium E2E 30/30",
     "bench": "conformance/run_bench.sh — raden.bench-report.v1 (hash gate 付き)",
     "gate": "scripts/run_checks.sh + scripts/check_gate.py (fail-closed)",
     "consumer": "scripts/run_consumer_test.sh (独立 module、native/js)",
     "gate_fault_injection": "scripts/test_gate.sh"
   },
   "runtime_dependencies": [
-    { "module": "moonbitlang/async", "version": "0.22.5", "scope": "fs/時刻のみ、pure core は不使用" }
+    { "module": "moonbitlang/async", "version": "0.22.4", "scope": "fs/時刻のみ、pure core は不使用" }
   ],
   "assets": {
     "conformance/fonts/SourceSans3-Regular.ttf": {
       "license": "SIL OFL 1.1",
-      "sha256_recorded": true,
+      "sha256": "4644c81b86ec9caaa76b634889968ed3c4f4f52f054855933acc7c2b21e53b0f",
       "note": "検証用フォント。再配布条件確認済み (OFL)。runtime 埋め込みなし"
     },
     "tiger_data": { "status": "pending_provenance_check", "included": false }

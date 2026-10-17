@@ -1,5 +1,7 @@
 import {
+  "gpui-mbt/raden",
   "gpui-mbt/raden/examples/scenes",
+  "gpui-mbt/raden/font",
   "gpui-mbt/raden/internal/sha256",
   "moonbitlang/async",
   "moonbitlang/async/fs",

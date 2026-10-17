@@ -1,7 +1,12 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "gpui-mbt/raden/examples/raden-demo"
 
+import {
+  "gpui-mbt/raden",
+}
+
 // Values
+pub fn encode_bmp(@raden.Image) -> Bytes raise @raden.RadenError
 
 // Errors
 

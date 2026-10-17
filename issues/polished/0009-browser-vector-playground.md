@@ -95,9 +95,10 @@ Depends-on: RADEN-0002, RADEN-0008
 
 ## 注記
 
-- 検証状態: M1 完了 (2026-10-16 実施)。chromium headless E2E 30/30、
-  node 純粋ロジック 15/15、native/js test 47/47、conformance 80/80。
-  受け入れ条件は全て検証済み。M2/M3 の編集 UI (制御点・stroke・gradient
-  操作) は未実装。deploy は未実施 (ローカル検証のみ)。
+- 検証状態: M1 完了 (2026-10-17 再検証)。chromium headless E2E 30/30、
+  node 純粋ロジック 15/15、native 75 / js 58 tests、conformance 95/95。
+  受け入れ条件のうち M1 の表示・操作・故障注入は検証済み。M2/M3 の編集 UI
+  (制御点・stroke・gradient 操作) は未実装で、release manifest でも
+  not_implemented と明示する。deploy は未実施 (ローカル検証のみ)。
 - 本Issueは [issues/README.md](../README.md) のM1〜M3（最初のデモ〜Vector Playground）にまたがる。deployと公開は本Issueの実装完了後の別判断。
 - 2026-10-16: polish-issue で実装可能な形式へ整備。issues/open から移動。内容は計画作成時のもので、実装・検証は未実行

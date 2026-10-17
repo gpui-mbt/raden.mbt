@@ -17,6 +17,11 @@ OUT="conformance/bench"
 FRAMES="${1:-30}"
 ORACLE_BIN="conformance/rust-oracle/target/release/raden-oracle"
 
+# サンドボックス等で ~/.cargo に書けない環境向けの opt-in 設定。
+if [ -n "${RADEN_CARGO_HOME:-}" ]; then
+  export CARGO_HOME="$RADEN_CARGO_HOME"
+fi
+
 echo "== building oracle (release) =="
 (cd conformance/rust-oracle && cargo build --release --locked)
 

@@ -22,7 +22,7 @@
 | `Image::data` | src/api/image.rs | `Image::data` (BytesView 返却) | pass | 0003 | 読み取り専用 |
 | `Image::data_mut` | src/api/image.rs | 非公開 | not_applicable | 0003 | 所有 buffer の無制限貸出は移植しない |
 | `Image::data_ptr_mut` | src/api/image.rs | なし | not_applicable | 0003 | unsafe ポインタは移植対象外 |
-| `Image::write_to_file` | src/api/image.rs | `write_bmp` 相当 | not_implemented | 0008 | ファイル I/O は host 層 |
+| `Image::write_to_file` | src/api/image.rs | なし (host の `examples/raden-demo/bmp.mbt`) | not_implemented | 0008 | ライブラリ API としては提供しない。host の BMP 出力は oracle と同じ形式で検証済み |
 | `Rgba32::new/rgb/r/g/b/a` | src/api/style.rs | `Rgba32` | pass | 0003 | 内部表現 0xAARRGGBB |
 | `Rgba32::{is_opaque,is_transparent,to_prgb32}` | src/api/style.rs | 同名 | pass | 0003 | |
 | `CompOp` (全 29) | src/api/style.rs | `CompOp` | pass | 0003/0007 | comp_ops_box_8x29 / comp_ops_span_42x35 fixture で全 op を網羅。ColorDodge/ColorBurn は上流同様 SIMD 経路 (f32) とスカラ末尾経路 (整数) をラン長で使い分ける |
@@ -63,7 +63,7 @@
 | `FontData` / `FontFace` / `Font` | src/font/ | `font::FontData` / `FontFace` / `Font` | pass | 0011 | text_* fixture。shape は glyph/cluster/advance/offset を meta で厳密比較 |
 | `PipelineRuntime` | src/pipeline/runtime.rs | `PipelineRuntime` (スカラ workspace) | implemented_unverified | 0003 | JIT キャッシュではない |
 | JIT コンパイル API (`get_or_compile_*`) | src/pipeline/ | なし | not_applicable | 0001 | JIT 非対応、スカラ参照実装で代替 |
-| `codec::bmp` | src/codec/bmp.rs | BMP 書き出し相当 | not_implemented | 0009 | host/codec 層として別途 |
+| `codec::bmp` | src/codec/bmp.rs | `examples/raden-demo/bmp.mbt` (host) | pass | 0008 | top-down 32bpp BI_BITFIELDS。examples/run_examples.sh が raw と decode 結果を照合 |
 
 ## パブリック API でないもの (非互換として明記)
 

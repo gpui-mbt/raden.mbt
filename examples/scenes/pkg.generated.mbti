@@ -13,6 +13,8 @@ pub fn canonical_rgba8(@raden.Image) -> Bytes
 
 pub fn render(@raden.Context, SceneName, Double, Double, Double) -> Unit raise @raden.RadenError
 
+pub fn render_to_image(SceneName, Int, Int, Double) -> @raden.Image raise @raden.RadenError
+
 pub fn render_to_rgba8(SceneName, Int, Int, Double) -> Bytes raise @raden.RadenError
 
 // Errors
